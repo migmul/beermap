@@ -1,19 +1,27 @@
 const UI = {
+    currentBarData: null,
+
     initTheme() {
         const toggleBtn = document.getElementById('theme-toggle');
         toggleBtn.addEventListener('click', () => {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            document.documentElement.setAttribute('data-theme', currentTheme === 'dark' ? 'light' : 'dark');
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            const newTheme = isDark ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            // On notifie la carte pour changer les tuiles Leaflet
+            MapService.setTheme(newTheme);
         });
     },
 
     openBarModal(bar) {
+        UI.currentBarData = bar; // Stocker pour le bouton de modification
+
         document.getElementById('modal-title').textContent = bar.name;
         document.getElementById('modal-address').textContent = bar.address;
+        document.getElementById('modal-phone').textContent = bar.phone || "Non renseigné";
         document.getElementById('modal-hours').textContent = bar.standard_hours;
         document.getElementById('modal-hh').textContent = bar.hh_hours || "Aucun";
         
-        // Image logic
         const imgEl = document.getElementById('modal-image');
         if (bar.image_url) {
             imgEl.src = `${API_BASE_URL}${bar.image_url}`;
@@ -22,15 +30,10 @@ const UI = {
             imgEl.style.display = "none";
         }
 
-        // Happy Hour live indicator
         const hhIndicator = document.getElementById('hh-indicator');
-        if (Utils.isCurrentlyHappyHour(bar.hh_hours)) {
-            hhIndicator.classList.remove('hidden');
-        } else {
-            hhIndicator.classList.add('hidden');
-        }
+        if (Utils.isCurrentlyHappyHour(bar.hh_hours)) hhIndicator.classList.remove('hidden');
+        else hhIndicator.classList.add('hidden');
 
-        // Tags
         const tagsContainer = document.getElementById('modal-tags');
         tagsContainer.innerHTML = '';
         if (bar.tags) {
@@ -42,7 +45,6 @@ const UI = {
             });
         }
 
-        // Menu
         const menuContainer = document.getElementById('modal-menu');
         menuContainer.innerHTML = '';
         bar.menus.forEach(item => {
@@ -54,6 +56,24 @@ const UI = {
         document.getElementById('bar-modal').classList.remove('hidden');
     },
 
+    openCrowdsourcingModal(editMode = false) {
+        const form = document.getElementById('add-bar-form');
+        form.reset();
+        
+        if (editMode && UI.currentBarData) {
+            document.getElementById('form-title').textContent = "Suggérer une modification";
+            document.getElementById('add-bar-id').value = UI.currentBarData.id;
+            document.getElementById('add-name').value = UI.currentBarData.name;
+            document.getElementById('add-address').value = UI.currentBarData.address;
+            document.getElementById('add-phone').value = UI.currentBarData.phone || "";
+            UI.closeModals(); // Ferme la fiche du bar
+        } else {
+            document.getElementById('form-title').textContent = "Suggérer un nouveau Bar";
+            document.getElementById('add-bar-id').value = "";
+        }
+        document.getElementById('add-modal').classList.remove('hidden');
+    },
+
     closeModals() {
         document.getElementById('bar-modal').classList.add('hidden');
         document.getElementById('add-modal').classList.add('hidden');
@@ -63,11 +83,9 @@ const UI = {
         document.querySelector('.close-btn').addEventListener('click', this.closeModals);
         document.querySelector('.close-btn-add').addEventListener('click', this.closeModals);
         
-        document.getElementById('fab-add').addEventListener('click', () => {
-            document.getElementById('add-modal').classList.remove('hidden');
-        });
+        document.getElementById('fab-add').addEventListener('click', () => this.openCrowdsourcingModal(false));
+        document.getElementById('btn-edit-bar').addEventListener('click', () => this.openCrowdsourcingModal(true));
 
-        // Fermeture en cliquant en dehors de la modale
         document.querySelectorAll('.modal').forEach(modal => {
             modal.addEventListener('click', (e) => {
                 if(e.target === modal) this.closeModals();

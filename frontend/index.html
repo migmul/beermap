@@ -3,32 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Hour Map</title>
-    
-    <!-- Leaflet CSS -->
+    <title>Happy Hour Map v1.1</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    
-    <!-- Styles locaux -->
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/glassmorphism.css">
 </head>
 <body>
-    <!-- En-tête / Filtres flottants -->
     <header class="glass-panel floating-header">
         <h1>HH Map</h1>
         <div class="filters">
-            <label class="toggle">
-                <input type="checkbox" id="filter-hh"> Actuellement en Happy Hour
-            </label>
-            <label class="toggle">
-                <input type="checkbox" id="filter-price"> Pinte < 5€
-            </label>
+            <label class="toggle"><input type="checkbox" id="filter-hh"> 🔥 En Happy Hour</label>
+            <label class="toggle"><input type="checkbox" id="filter-price"> 🍺 Pinte < 5€</label>
         </div>
         <button id="theme-toggle" class="glass-btn">🌞/🌙</button>
     </header>
 
-    <!-- Conteneur de la carte -->
     <main id="map-container"></main>
 
     <!-- Modale Détails du Bar -->
@@ -37,32 +27,36 @@
             <span class="close-btn">&times;</span>
             <h2 id="modal-title">Nom du Bar</h2>
             <div id="hh-indicator" class="indicator hidden">🔥 Happy Hour en cours !</div>
-            <img id="modal-image" src="" alt="Photo du bar" style="display:none; width:100%; border-radius: 8px;">
+            <img id="modal-image" src="" alt="Photo du bar" style="display:none; width:100%; border-radius: 8px; margin-bottom: 15px;">
             <p><strong>Adresse:</strong> <span id="modal-address"></span></p>
+            <p><strong>Téléphone:</strong> <span id="modal-phone"></span></p>
             <p><strong>Horaires:</strong> <span id="modal-hours"></span> (HH: <span id="modal-hh"></span>)</p>
-            <div class="tags" id="modal-tags"></div>
+            <div class="tags" id="modal-tags" style="margin: 10px 0;"></div>
             <h3>Menu</h3>
-            <ul id="modal-menu"></ul>
+            <ul id="modal-menu" style="margin-bottom: 15px;"></ul>
+            <button id="btn-edit-bar" class="glass-btn">✏️ Suggérer une modification</button>
         </div>
     </div>
 
-    <!-- Modale Crowdsourcing (Bouton flottant) -->
     <button id="fab-add" class="glass-btn fab">+</button>
     
+    <!-- Modale Crowdsourcing (Ajout / Modification) -->
     <div id="add-modal" class="modal hidden">
         <div class="modal-content glass-panel">
             <span class="close-btn-add">&times;</span>
-            <h2>Suggérer un Bar</h2>
+            <h2 id="form-title">Suggérer un Bar</h2>
             <form id="add-bar-form">
+                <input type="hidden" id="add-bar-id">
                 <input type="text" id="add-name" placeholder="Nom du bar" required class="glass-input">
-                <input type="text" id="add-address" placeholder="Adresse" required class="glass-input">
+                <input type="text" id="add-address" placeholder="Adresse complète (pour géocodage)" required class="glass-input">
+                <input type="text" id="add-phone" placeholder="Téléphone" class="glass-input">
+                <label for="add-image" style="font-size: 0.9em; margin-bottom: 5px; display: block;">Photo du bar/menu :</label>
                 <input type="file" id="add-image" accept="image/*" class="glass-input">
-                <button type="submit" class="glass-btn primary">Envoyer</button>
+                <button type="submit" id="submit-btn" class="glass-btn primary">Envoyer la suggestion</button>
             </form>
         </div>
     </div>
 
-    <!-- Scripts Leaflet et locaux -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/api.js"></script>
