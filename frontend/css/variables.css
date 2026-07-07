@@ -1,0 +1,18 @@
+:root {
+    /* Accent Ocre Jaune */
+    --accent: #DAA520;
+    --accent-hover: #b8860b;
+    
+    /* Light Mode */
+    --bg-color: #f0f2f5;
+    --text-color: #333333;
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.3);
+}
+
+[data-theme="dark"] {
+    --bg-color: #121212;
+    --text-color: #e0e0e0;
+    --glass-bg: rgba(30, 30, 30, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}

@@ -1,0 +1,33 @@
+from pydantic import BaseModel
+from typing import List, Optional
+
+class MenuBase(BaseModel):
+    item_name: str
+    normal_price: float
+    hh_price: Optional[float] = None
+
+class MenuResponse(MenuBase):
+    id: int
+    class Config:
+        from_attributes = True
+
+class BarBase(BaseModel):
+    name: str
+    latitude: float
+    longitude: float
+    address: str
+    phone: Optional[str] = None
+    standard_hours: str
+    hh_hours: Optional[str] = None
+    tags: Optional[str] = None
+
+class BarCreate(BarBase):
+    pass
+
+class BarResponse(BarBase):
+    id: int
+    image_url: Optional[str] = None
+    menus: List[MenuResponse] = []
+    
+    class Config:
+        from_attributes = True
