@@ -50,13 +50,28 @@ function initCrowdsourcing() {
         formData.append('name', document.getElementById('add-name').value);
         formData.append('address', address);
         formData.append('phone', document.getElementById('add-phone').value);
-        formData.append('standard_hours', document.getElementById('add-hours').value);
-        formData.append('hh_hours', document.getElementById('add-hh').value);
         formData.append('tags', document.getElementById('add-tags').value);
         
         formData.append('latitude', coords ? coords.lat : center.lat);
         formData.append('longitude', coords ? coords.lon : center.lng);
         
+        const hoursStart = document.getElementById('add-hours-start').value;
+        const hoursEnd = document.getElementById('add-hours-end').value;
+        const stdHours = (hoursStart && hoursEnd) ? `${hoursStart}-${hoursEnd}` : "";
+
+        const hhStart = document.getElementById('add-hh-start').value;
+        const hhEnd = document.getElementById('add-hh-end').value;
+        const hhHours = (hhStart && hhEnd) ? `${hhStart}-${hhEnd}` : "";
+
+        formData.append('standard_hours', stdHours);
+        formData.append('hh_hours', hhHours);
+        
+        // Ajout des prix de la pinte
+        const priceNormal = document.getElementById('add-price-normal').value;
+        const priceHH = document.getElementById('add-price-hh').value;
+        if (priceNormal) formData.append('pint_price', priceNormal);
+        if (priceHH) formData.append('pint_hh_price', priceHH);
+
         const barId = document.getElementById('add-bar-id').value;
         if (barId) formData.append('bar_id', barId);
         

@@ -22,6 +22,8 @@ async def suggest_bar(
     hh_hours: Optional[str] = Form(None),
     tags: Optional[str] = Form(None),
     bar_id: Optional[int] = Form(None),
+    pint_price: Optional[float] = Form(None),
+    pint_hh_price: Optional[float] = Form(None),
     image: UploadFile = File(None),
     db: Session = Depends(database.get_db)
 ):
@@ -35,6 +37,7 @@ async def suggest_bar(
             shutil.copyfileobj(image.file, buffer)
         image_url = f"/static/images/{filename}"
 
+    # --- MODE MODIFICATION ---
     if bar_id:
         db_bar = db.query(models.Bar).filter(models.Bar.id == bar_id).first()
         if db_bar:
@@ -46,19 +49,38 @@ async def suggest_bar(
             db_bar.tags = tags
             db_bar.latitude = latitude
             db_bar.longitude = longitude
-            if image_url: db_bar.image_url = image_url
+            if image_url: 
+                db_bar.image_url = image_url
             db.commit()
             return {"message": "Bar modifié"}
 
-    # Mode Création
+    # --- MODE CRÉATION ---
+    # (Le code arrive ici uniquement si bar_id est vide, car le bloc au-dessus contient un "return")
     bar_data = schemas.BarCreate(
-        name=name, latitude=latitude, longitude=longitude, address=address,
-        standard_hours="A définir", phone=phone
+        name=name, 
+        latitude=latitude, 
+        longitude=longitude, 
+        address=address,
+        standard_hours=standard_hours, 
+        hh_hours=hh_hours,
+        tags=tags,
+        phone=phone
     )
     db_bar = crud.create_bar(db, bar_data)
     
     if image_url:
         db_bar.image_url = image_url
-        db.commit()
+        
+    # Création du menu simplifié (Pinte) si les prix sont renseignés
+    if pint_price:
+        new_menu = models.Menu(
+            item_name="Pinte (standard)",
+            normal_price=pint_price,
+            hh_price=pint_hh_price,
+            bar_id=db_bar.id
+        )
+        db.add(new_menu)
+
+    db.commit()
 
     return {"message": "Suggestion de création enregistrée avec succès"}

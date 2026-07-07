@@ -7,8 +7,8 @@ const MapService = {
         map = L.map('map-container', { zoomControl: false }).setView([46.603354, 1.888334], 6);
         markersLayer = L.layerGroup().addTo(map);
         
-        // Initialisation avec le thème sombre par défaut (comme le HTML)
-        this.setTheme('dark');
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+        this.setTheme(currentTheme);
         this.locateUser();
     },
 
@@ -30,7 +30,7 @@ const MapService = {
                 const { latitude, longitude } = position.coords;
                 map.setView([latitude, longitude], 14);
                 L.circleMarker([latitude, longitude], {
-                    color: '#DAA520', radius: 8, fillOpacity: 0.8
+                    color: '#4285F4', radius: 8, fillOpacity: 0.8
                 }).addTo(map).bindPopup("Vous êtes ici");
             });
         }

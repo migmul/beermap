@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.3] - 2026-07-07
+### Ajouts
+- **Préférence de thème** : Sauvegarde du choix Light/Dark mode via `localStorage` pour qu'il persiste au rechargement.
+- **Saisie des horaires optimisée** : Remplacement des champs texte par des champs `<input type="time">` couplés (début et fin) pour les horaires standards et l'Happy Hour.
+- **Menu simplifié (Création)** : Ajout des champs permettant de renseigner le prix de la pinte normale et en Happy Hour lors de l'ajout d'un bar, pour alimenter directement la fiche.
+
+### Modifications
+- **Marqueur utilisateur** : Changement de la couleur du point de géolocalisation de l'utilisateur (passé de jaune à bleu) pour ne pas le confondre avec les bars.
+- **UI de la modale** : Ajout d'une marge sous le titre "Suggérer un nouveau bar", et correction de la majuscule sur "bar".
+
 ## [1.2] - 2026-07-07
 ### Ajouts
 - **Nouveau nom** : Le projet a été renommé "BeerMap".

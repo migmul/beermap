@@ -3,12 +3,16 @@ const UI = {
 
     initTheme() {
         const toggleBtn = document.getElementById('theme-toggle');
+        // Récupération de la préférence ou Dark par défaut
+        const savedTheme = localStorage.getItem('beermap_theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+
         toggleBtn.addEventListener('click', () => {
             const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
             const newTheme = isDark ? 'light' : 'dark';
             
             document.documentElement.setAttribute('data-theme', newTheme);
-            // On notifie la carte pour changer les tuiles Leaflet
+            localStorage.setItem('beermap_theme', newTheme); // Sauvegarde
             MapService.setTheme(newTheme);
         });
     },
@@ -58,19 +62,34 @@ const UI = {
 
     openCrowdsourcingModal(editMode = false) {
         const form = document.getElementById('add-bar-form');
-        form.reset();
+        form.reset(); 
         
         if (editMode && UI.currentBarData) {
-            document.getElementById('form-title').textContent = "Suggérer une modification";
+            document.getElementById('form-title').textContent = "Modifier le bar";
             document.getElementById('add-bar-id').value = UI.currentBarData.id;
             document.getElementById('add-name').value = UI.currentBarData.name;
             document.getElementById('add-address').value = UI.currentBarData.address;
             document.getElementById('add-phone').value = UI.currentBarData.phone || "";
-            UI.closeModals(); // Ferme la fiche du bar
+            document.getElementById('add-tags').value = UI.currentBarData.tags || "";
+            
+            // Éclatement de la chaîne "10:00-02:00" pour remplir les inputs time
+            if (UI.currentBarData.standard_hours && UI.currentBarData.standard_hours.includes('-')) {
+                const [hStart, hEnd] = UI.currentBarData.standard_hours.split('-');
+                document.getElementById('add-hours-start').value = hStart;
+                document.getElementById('add-hours-end').value = hEnd;
+            }
+            if (UI.currentBarData.hh_hours && UI.currentBarData.hh_hours.includes('-')) {
+                const [hhStart, hhEnd] = UI.currentBarData.hh_hours.split('-');
+                document.getElementById('add-hh-start').value = hhStart;
+                document.getElementById('add-hh-end').value = hhEnd;
+            }
+            
+            UI.closeModals(); 
         } else {
-            document.getElementById('form-title').textContent = "Suggérer un nouveau Bar";
-            document.getElementById('add-bar-id').value = "";
+            document.getElementById('form-title').textContent = "Suggérer un nouveau bar"; // Majuscule retirée
+            document.getElementById('add-bar-id').value = ""; 
         }
+        
         document.getElementById('add-modal').classList.remove('hidden');
     },
 
