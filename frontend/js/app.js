@@ -32,6 +32,7 @@ async function loadAndRenderBars() {
     });
     
     MapService.renderMarkers(barsToRender, UI.openBarModal);
+    MapService.renderList(barsToRender, UI.openBarModal); 
 }
 
 // Fonction de géocodage inchangée
@@ -241,6 +242,7 @@ function initAdmin() {
 
 document.addEventListener('DOMContentLoaded', () => {
     UI.initTheme();
+    UI.initNavigation()
     UI.initModals();
     MapService.init();
     initCrowdsourcing();

@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.5] - 2026-07-07
+### Ajouts
+- **Vue Liste** : Création d'un mode d'affichage alternatif à la carte. La "Vue liste" affiche les bars filtrés sous forme de cartes (cards) dans une grille responsive, respectant le style Glassmorphism.
+- **Navigation** : Les boutons "Vue carte" et "Vue liste" dans le header sont maintenant fonctionnels. Le basculement recalcule la taille de la carte (fix d'un bug Leaflet connu via `invalidateSize()`) pour éviter les tuiles grises.
+
 ## [1.4.3] - 2026-07-07
 ### Corrections
 - **Régression de visibilité (Backend)** : Les modifications d'un bar existant ne masquent plus l'ancienne version. Une copie de brouillon est créée et vient écraser l'original uniquement après approbation de l'admin.

@@ -14,10 +14,10 @@
     <header class="glass-panel top-header">
         <div class="logo">🍺 BeerMap</div>
         <nav class="main-nav">
-            <a href="#" class="active">Vue carte</a>
-            <a href="#">Vue liste</a>
+            <a href="#" id="nav-map" class="active">Vue carte</a>
+            <a href="#" id="nav-list">Vue liste</a>
             <a href="#" id="nav-login">Compte</a>
-            <a href="#" id="nav-admin" class="hidden">Admin</a>     
+            <a href="#" id="nav-admin" class="hidden">Admin</a>
             <button id="theme-toggle" class="glass-btn">🌞/🌙</button>
         </nav>
     </header>
@@ -43,6 +43,7 @@
     </aside>
 
     <main id="map-container"></main>
+    <main id="list-container" class="hidden" style="padding-top: 100px; padding-left: 360px; padding-right: 20px; height: 100vh; overflow-y: auto; display: flex; flex-wrap: wrap; gap: 20px; align-content: flex-start;"></main>
 
     <!-- Modale Détails du Bar -->
     <div id="bar-modal" class="modal hidden">

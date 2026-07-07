@@ -17,6 +17,34 @@ const UI = {
         });
     },
 
+    initNavigation() {
+        const navMap = document.getElementById('nav-map');
+        const navList = document.getElementById('nav-list');
+        const mapContainer = document.getElementById('map-container');
+        const listContainer = document.getElementById('list-container');
+
+        navMap.addEventListener('click', (e) => {
+            e.preventDefault();
+            navMap.classList.add('active');
+            navList.classList.remove('active');
+            
+            listContainer.classList.add('hidden');
+            mapContainer.classList.remove('hidden');
+            
+            // Fix Leaflet : recalcule la taille après affichage
+            setTimeout(() => { map.invalidateSize(); }, 100); 
+        });
+
+        navList.addEventListener('click', (e) => {
+            e.preventDefault();
+            navList.classList.add('active');
+            navMap.classList.remove('active');
+            
+            mapContainer.classList.add('hidden');
+            listContainer.classList.remove('hidden');
+        });
+    },
+
     openBarModal(bar) {
         UI.currentBarData = bar; // Stocker pour le bouton de modification
 

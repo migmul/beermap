@@ -173,3 +173,33 @@
 
 /* Style jaune pour les checkbox */
 input[type="checkbox"] { accent-color: var(--accent); }
+
+/* --- VUE LISTE (Cards) --- */
+.bar-card {
+    width: calc(33.333% - 20px);
+    min-width: 250px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bar-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.25);
+    border-color: var(--accent);
+}
+
+.bar-card h3 { margin: 0; color: var(--text-color); display: flex; justify-content: space-between; align-items: center; }
+.bar-card p { margin: 0; font-size: 0.9em; color: var(--text-color); opacity: 0.8; }
+.bar-card img { width: 100%; height: 150px; object-fit: cover; border-radius: 8px; }
+.bar-card .tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: auto; }
+
+/* Ajustement pour les petits écrans */
+@media (max-width: 1200px) { .bar-card { width: calc(50% - 20px); } }
+@media (max-width: 800px) { 
+    .bar-card { width: 100%; }
+    #list-container { padding-left: 20px !important; }
+}
