@@ -95,3 +95,55 @@
     font-size: 0.8em;
     margin-right: 5px;
 }
+
+/* Header global */
+.top-header {
+    position: fixed;
+    top: 0; left: 0; width: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    border-radius: 0 0 16px 16px; /* Bords arrondis seulement en bas */
+}
+
+.logo { font-size: 1.5rem; font-weight: bold; color: var(--accent); }
+
+.main-nav { display: flex; gap: 20px; align-items: center; }
+.main-nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+.main-nav a.active { color: var(--accent); border-bottom: 2px solid var(--accent); }
+
+/* Sidebar verticale gauche */
+.sidebar {
+    position: fixed;
+    top: 90px; /* Sous le header */
+    left: 20px;
+    width: 320px;
+    z-index: 1000;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.filters-vertical { display: flex; flex-direction: column; gap: 10px; }
+
+/* Boutons et Inputs... inchangés */
+.glass-btn.danger { background: rgba(220, 53, 69, 0.2); border-color: #dc3545; color: #ff6b6b; }
+.glass-btn.danger:hover { background: #dc3545; color: white; }
+.modal-actions { display: flex; gap: 10px; margin-top: 20px; }
+
+/* ANIMATION D'OUVERTURE MODALE */
+@keyframes popIn {
+    0% { opacity: 0; transform: scale(0.85) translateY(20px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.modal:not(.hidden) .modal-content {
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}

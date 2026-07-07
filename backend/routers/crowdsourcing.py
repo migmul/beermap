@@ -18,7 +18,10 @@ async def suggest_bar(
     longitude: float = Form(...),
     address: str = Form(...),
     phone: Optional[str] = Form(None),
-    bar_id: Optional[int] = Form(None), # Gère le mode modification
+    standard_hours: Optional[str] = Form("A définir"),
+    hh_hours: Optional[str] = Form(None),
+    tags: Optional[str] = Form(None),
+    bar_id: Optional[int] = Form(None),
     image: UploadFile = File(None),
     db: Session = Depends(database.get_db)
 ):
@@ -33,18 +36,19 @@ async def suggest_bar(
         image_url = f"/static/images/{filename}"
 
     if bar_id:
-        # Mode Modification : On met à jour l'existant directement (ou on pourrait créer une table "Suggestions" en attente de validation)
         db_bar = db.query(models.Bar).filter(models.Bar.id == bar_id).first()
         if db_bar:
             db_bar.name = name
             db_bar.address = address
             db_bar.phone = phone
+            db_bar.standard_hours = standard_hours
+            db_bar.hh_hours = hh_hours
+            db_bar.tags = tags
             db_bar.latitude = latitude
             db_bar.longitude = longitude
-            if image_url:
-                db_bar.image_url = image_url
+            if image_url: db_bar.image_url = image_url
             db.commit()
-            return {"message": "Bar modifié avec succès"}
+            return {"message": "Bar modifié"}
 
     # Mode Création
     bar_data = schemas.BarCreate(

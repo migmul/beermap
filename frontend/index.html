@@ -3,21 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Hour Map v1.1</title>
+    <title>BeerMap</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/glassmorphism.css">
 </head>
 <body>
-    <header class="glass-panel floating-header">
-        <h1>HH Map</h1>
-        <div class="filters">
-            <label class="toggle"><input type="checkbox" id="filter-hh"> 🔥 En Happy Hour</label>
-            <label class="toggle"><input type="checkbox" id="filter-price"> 🍺 Pinte < 5€</label>
-        </div>
-        <button id="theme-toggle" class="glass-btn">🌞/🌙</button>
+    <!-- En-tête pleine largeur -->
+    <header class="glass-panel top-header">
+        <div class="logo">🍺 BeerMap</div>
+        <nav class="main-nav">
+            <a href="#" class="active">Vue carte</a>
+            <a href="#">Vue liste</a>
+            <button id="theme-toggle" class="glass-btn">🌞/🌙</button>
+        </nav>
     </header>
+
+    <!-- Barre latérale gauche -->
+    <aside class="glass-panel sidebar">
+        <h3>Recherche & Filtres</h3>
+        <input type="text" id="search-input" class="glass-input" placeholder="Nom ou adresse du bar...">
+        
+        <div class="filters-vertical">
+            <label class="toggle">
+                <input type="checkbox" id="filter-hh"> 🔥 En Happy Hour
+            </label>
+            <label class="toggle">
+                <input type="checkbox" id="filter-price"> 🍺 Pinte < 5€
+            </label>
+        </div>
+    </aside>
 
     <main id="map-container"></main>
 
@@ -34,25 +50,39 @@
             <div class="tags" id="modal-tags" style="margin: 10px 0;"></div>
             <h3>Menu</h3>
             <ul id="modal-menu" style="margin-bottom: 15px;"></ul>
-            <button id="btn-edit-bar" class="glass-btn">✏️ Suggérer une modification</button>
+            
+            <div class="modal-actions">
+                <button id="btn-edit-bar" class="glass-btn">✏️ Modifier</button>
+                <button id="btn-delete-bar" class="glass-btn danger">🗑️ Supprimer</button>
+            </div>
         </div>
     </div>
 
+    <!-- Bouton d'ajout -->
     <button id="fab-add" class="glass-btn fab">+</button>
     
-    <!-- Modale Crowdsourcing (Ajout / Modification) -->
+    <!-- Modale d'Ajout/Modification -->
     <div id="add-modal" class="modal hidden">
-        <div class="modal-content glass-panel">
+        <div class="modal-content glass-panel animated-modal">
             <span class="close-btn-add">&times;</span>
             <h2 id="form-title">Suggérer un Bar</h2>
             <form id="add-bar-form">
                 <input type="hidden" id="add-bar-id">
                 <input type="text" id="add-name" placeholder="Nom du bar" required class="glass-input">
-                <input type="text" id="add-address" placeholder="Adresse complète (pour géocodage)" required class="glass-input">
+                <input type="text" id="add-address" placeholder="Adresse complète" required class="glass-input">
                 <input type="text" id="add-phone" placeholder="Téléphone" class="glass-input">
-                <label for="add-image" style="font-size: 0.9em; margin-bottom: 5px; display: block;">Photo du bar/menu :</label>
+                
+                <!-- Nouveaux champs horaires et tags -->
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" id="add-hours" placeholder="Horaires (ex: 10:00-02:00)" class="glass-input">
+                    <input type="text" id="add-hh" placeholder="Happy Hour (ex: 17:00-20:00)" class="glass-input">
+                </div>
+                <input type="text" id="add-tags" placeholder="Tags séparés par des virgules (ex: Terrasse, PMR)" class="glass-input">
+
+                <label for="add-image" style="font-size: 0.9em; margin-bottom: 5px; display: block;">Photo du bar :</label>
                 <input type="file" id="add-image" accept="image/*" class="glass-input">
-                <button type="submit" id="submit-btn" class="glass-btn primary">Envoyer la suggestion</button>
+                
+                <button type="submit" id="submit-btn" class="glass-btn primary" style="width: 100%;">Enregistrer</button>
             </form>
         </div>
     </div>
