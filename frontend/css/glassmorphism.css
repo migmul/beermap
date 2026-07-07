@@ -152,17 +152,24 @@
     -webkit-appearance: none;
     width: 100%;
     height: 8px;
-    background: var(--glass-border);
+    /* Un fond semi-transparent noir (Light mode) ou blanc (Dark mode) selon le texte */
+    background: rgba(128, 128, 128, 0.4); 
     border-radius: 4px;
     outline: none;
     margin-top: 5px;
+    /* Optionnel : petite ombre interne pour le relief */
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.2); 
 }
 .glass-slider::-webkit-slider-thumb {
-    -webkit-appearance: none; appearance: none;
-    width: 16px; height: 16px;
+    -webkit-appearance: none; 
+    appearance: none;
+    width: 18px; 
+    height: 18px;
     border-radius: 50%;
     background: var(--accent);
     cursor: pointer;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5); /* Ombre pour le faire ressortir */
 }
+
 /* Style jaune pour les checkbox */
 input[type="checkbox"] { accent-color: var(--accent); }

@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.4.1] - 2026-07-07
+### Modifications
+- **Visibilité Sliders** : Ajustement CSS pour rendre la piste des sliders visible en thèmes clair et sombre.
+- **Logique de Connexion** : Le bouton "Compte" devient "Connexion" si déconnecté. Une fois connecté, la modale affiche les informations du compte et un bouton de déconnexion.
+- **Correction Modales** : Les modales d'administration et de compte se ferment correctement au clic en dehors du cadre.
+
 ## [1.4] - 2026-07-07
 ### Ajouts
 - **Système de comptes & Auth JWT** : Ajout d'une table Utilisateurs (Email, Pseudo, Mot de passe hashé via `bcrypt`).

@@ -94,17 +94,19 @@ const UI = {
     },
 
     closeModals() {
-        document.getElementById('bar-modal').classList.add('hidden');
-        document.getElementById('add-modal').classList.add('hidden');
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.classList.add('hidden');
+        });
     },
 
     initModals() {
         document.querySelector('.close-btn').addEventListener('click', this.closeModals);
         document.querySelector('.close-btn-add').addEventListener('click', this.closeModals);
-        
-        // NOUVEAU : Fermeture des modales Compte et Admin
         document.querySelector('.close-btn-login').addEventListener('click', this.closeModals);
         document.querySelector('.close-btn-admin').addEventListener('click', this.closeModals);
+
+        document.getElementById('fab-add').addEventListener('click', () => this.openCrowdsourcingModal(false));
+        document.getElementById('btn-edit-bar').addEventListener('click', () => this.openCrowdsourcingModal(true));
         
         // NOUVEAU : Ouverture modale Compte
         document.getElementById('nav-login').addEventListener('click', (e) => {
@@ -112,14 +114,11 @@ const UI = {
             document.getElementById('login-modal').classList.remove('hidden');
         });
 
-        document.getElementById('fab-add').addEventListener('click', () => this.openCrowdsourcingModal(false));
-        
-        document.getElementById('fab-add').addEventListener('click', () => this.openCrowdsourcingModal(false));
-        document.getElementById('btn-edit-bar').addEventListener('click', () => this.openCrowdsourcingModal(true));
-
         document.querySelectorAll('.modal').forEach(modal => {
             modal.addEventListener('click', (e) => {
-                if(e.target === modal) this.closeModals();
+                if (e.target === modal) {
+                    modal.classList.add('hidden');
+                }
             });
         });
     }

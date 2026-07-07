@@ -93,42 +93,106 @@ function initAuth() {
     let isLoginMode = true;
     const form = document.getElementById('login-form');
     const switchBtn = document.getElementById('switch-register');
-    const title = form.previousElementSibling; // Le <h2>
+    const title = form.previousElementSibling; 
+    const navLoginBtn = document.getElementById('nav-login');
+    const modalContent = document.querySelector('#login-modal .modal-content');
     
-    // Gérer l'état initial (connecté ou non)
-    const isAdmin = localStorage.getItem('beermap_is_admin') === '1';
-    if (isAdmin) document.getElementById('nav-admin').classList.remove('hidden');
+    // Contenu initial du formulaire (pour le restaurer après déconnexion)
+    const originalFormHTML = form.innerHTML;
+    const originalSwitchHTML = switchBtn.parentElement.innerHTML;
 
-    switchBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        isLoginMode = !isLoginMode;
-        title.textContent = isLoginMode ? "Mon Compte" : "Créer un compte";
-        form.querySelector('button').textContent = isLoginMode ? "Connexion" : "S'inscrire";
-        switchBtn.textContent = isLoginMode ? "S'inscrire" : "Se connecter";
-    });
+    // --- Fonction utilitaire pour mettre à jour l'UI selon l'état ---
+    function updateAuthStateUI() {
+        const token = localStorage.getItem('beermap_token');
+        const isAdmin = localStorage.getItem('beermap_is_admin') === '1';
 
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const pseudo = document.getElementById('login-pseudo').value;
-        const pwd = document.getElementById('login-pwd').value;
-
-        try {
-            if (isLoginMode) {
-                const res = await API.login(pseudo, pwd);
-                localStorage.setItem('beermap_token', res.access_token);
-                localStorage.setItem('beermap_is_admin', res.is_admin);
-                if (res.is_admin === 1) document.getElementById('nav-admin').classList.remove('hidden');
-                alert("Connecté avec succès !");
+        if (token) {
+            // Utilisateur CONNECTÉ
+            navLoginBtn.textContent = "Mon compte";
+            if (isAdmin) document.getElementById('nav-admin').classList.remove('hidden');
+            
+            // Remplace le contenu de la modale par le profil
+            title.textContent = "Bienvenue !";
+            form.innerHTML = `<button type="button" id="btn-logout" class="glass-btn danger" style="width:100%; margin-top:20px;">Se déconnecter</button>`;
+            switchBtn.parentElement.innerHTML = ""; // Masque le lien d'inscription
+            
+            // Écouteur déconnexion
+            document.getElementById('btn-logout').addEventListener('click', () => {
+                localStorage.removeItem('beermap_token');
+                localStorage.removeItem('beermap_is_admin');
+                document.getElementById('nav-admin').classList.add('hidden');
+                updateAuthStateUI();
                 UI.closeModals();
-            } else {
-                await API.register("email@test.com", pseudo, pwd); // Email factice pour la V1
-                alert("Compte créé ! Vous pouvez maintenant vous connecter.");
-                switchBtn.click(); // Repasser en mode login
-            }
-        } catch (error) {
-            alert(error.message);
+                alert("Vous avez été déconnecté.");
+                window.location.reload(); // Optionnel : recharge pour être sûr de purger la mémoire
+            });
+
+        } else {
+            // Utilisateur DÉCONNECTÉ
+            navLoginBtn.textContent = "Connexion";
+            document.getElementById('nav-admin').classList.add('hidden');
+            
+            // Restaure le formulaire
+            title.textContent = "Connexion";
+            form.innerHTML = originalFormHTML;
+            
+            // On doit recréer l'élément de switch car innerHTML l'a écrasé
+            const p = document.createElement('p');
+            p.style.cssText = "text-align:center; margin-top:15px; font-size:0.9em;";
+            p.innerHTML = `Pas de compte ? <a href="#" id="switch-register" style="color:var(--accent);">S'inscrire</a>`;
+            if(!document.getElementById('switch-register')) modalContent.appendChild(p);
+            
+            // Ré-attacher les écouteurs sur le formulaire fraîchement restauré
+            attachFormListeners();
         }
+    }
+
+    // --- Gestion du formulaire de connexion/inscription ---
+    function attachFormListeners() {
+        const currentForm = document.getElementById('login-form');
+        const currentSwitch = document.getElementById('switch-register');
+        if(!currentForm || !currentSwitch) return;
+
+        currentSwitch.addEventListener('click', (e) => {
+            e.preventDefault();
+            isLoginMode = !isLoginMode;
+            title.textContent = isLoginMode ? "Connexion" : "Créer un compte";
+            currentForm.querySelector('button').textContent = isLoginMode ? "Connexion" : "S'inscrire";
+            currentSwitch.textContent = isLoginMode ? "S'inscrire" : "Se connecter";
+        });
+
+        currentForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const pseudo = document.getElementById('login-pseudo').value;
+            const pwd = document.getElementById('login-pwd').value;
+
+            try {
+                if (isLoginMode) {
+                    const res = await API.login(pseudo, pwd);
+                    localStorage.setItem('beermap_token', res.access_token);
+                    localStorage.setItem('beermap_is_admin', res.is_admin);
+                    updateAuthStateUI();
+                    UI.closeModals();
+                    alert("Connecté avec succès !");
+                } else {
+                    await API.register(`${pseudo}@beermap.fr`, pseudo, pwd); 
+                    alert("Compte créé ! Vous pouvez maintenant vous connecter.");
+                    currentSwitch.click(); 
+                }
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+    }
+
+    // --- Écouteur Ouverture Modale ---
+    navLoginBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.getElementById('login-modal').classList.remove('hidden');
     });
+
+    // Initialisation
+    updateAuthStateUI();
 }
 
 function initAdmin() {
