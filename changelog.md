@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.4.3] - 2026-07-07
+### Corrections
+- **Régression de visibilité (Backend)** : Les modifications d'un bar existant ne masquent plus l'ancienne version. Une copie de brouillon est créée et vient écraser l'original uniquement après approbation de l'admin.
+- **UI Modale d'ajout** : Renommage du titre en "Ajouter un bar" (HTML et JS) et correction du CSS inline pour empêcher le retour à la ligne des labels d'horaires.
+
 ## [1.4.2] - 2026-07-07
 ### Corrections
 - **Filtrage des statuts (Backend)** : Correction de la requête de base de données pour s'assurer que seuls les bars avec le statut `approved` sont envoyés sur la carte publique.

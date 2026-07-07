@@ -20,11 +20,12 @@ class Bar(Base):
     longitude = Column(Float)
     address = Column(String)
     phone = Column(String)
-    standard_hours = Column(String) # Ex: "10:00-02:00"
-    hh_hours = Column(String)       # Ex: "17:00-20:00"
-    tags = Column(String)           # Ex: "Terrasse, WiFi, PMR"
-    image_url = Column(String, nullable=True) # Chemin vers le dossier static
-    status = Column(String, default="pending")
+    standard_hours = Column(String)
+    hh_hours = Column(String)
+    tags = Column(String)
+    image_url = Column(String, nullable=True)
+    status = Column(String, default="pending") 
+    original_bar_id = Column(Integer, ForeignKey("bars.id"), nullable=True)
 
     menus = relationship("Menu", back_populates="bar")
 

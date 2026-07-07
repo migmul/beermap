@@ -41,23 +41,17 @@ async def suggest_bar(
 
     # --- MODE MODIFICATION ---
     if bar_id:
-        db_bar = db.query(models.Bar).filter(models.Bar.id == bar_id).first()
-        if db_bar:
-            db_bar.name = name
-            db_bar.address = address
-            db_bar.phone = phone
-            db_bar.standard_hours = standard_hours
-            db_bar.hh_hours = hh_hours
-            db_bar.tags = tags
-            db_bar.latitude = latitude
-            db_bar.longitude = longitude
-            
-            db_bar.status = "pending" 
-            
-            if image_url: 
-                db_bar.image_url = image_url
-            db.commit()
-            return {"message": "Modification enregistrée et en attente de validation."}
+        # On ne modifie plus l'existant. On crée un brouillon.
+        bar_data = schemas.BarCreate(
+            name=name, latitude=latitude, longitude=longitude, address=address,
+            standard_hours=standard_hours, hh_hours=hh_hours, tags=tags, phone=phone
+        )
+        db_draft = crud.create_bar(db, bar_data)
+        db_draft.original_bar_id = bar_id
+        if image_url: 
+            db_draft.image_url = image_url
+        db.commit()
+        return {"message": "Modification enregistrée et en attente de validation."}
 
     # --- MODE CRÉATION ---
     bar_data = schemas.BarCreate(

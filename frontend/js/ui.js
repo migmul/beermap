@@ -86,7 +86,7 @@ const UI = {
             
             UI.closeModals(); 
         } else {
-            document.getElementById('form-title').textContent = "Suggérer un nouveau bar"; // Majuscule retirée
+            document.getElementById('form-title').textContent = "Ajouter un bar";
             document.getElementById('add-bar-id').value = ""; 
         }
         
