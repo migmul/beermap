@@ -147,3 +147,22 @@
 .modal:not(.hidden) .modal-content {
     animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
+
+.glass-slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 8px;
+    background: var(--glass-border);
+    border-radius: 4px;
+    outline: none;
+    margin-top: 5px;
+}
+.glass-slider::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+}
+/* Style jaune pour les checkbox */
+input[type="checkbox"] { accent-color: var(--accent); }

@@ -3,7 +3,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from . import models
 from .database import engine
-from .routers import bars, crowdsourcing
+from .routers import bars, crowdsourcing, auth
 
 # Création des tables SQLite au démarrage
 models.Base.metadata.create_all(bind=engine)
@@ -25,3 +25,4 @@ app.mount("/static", StaticFiles(directory="backend/static"), name="static")
 # Inclusion des routeurs
 app.include_router(bars.router)
 app.include_router(crowdsourcing.router)
+app.include_router(auth.router)

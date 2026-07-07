@@ -31,3 +31,13 @@ class BarResponse(BarBase):
     
     class Config:
         from_attributes = True
+
+class UserCreate(BaseModel):
+    email: str
+    pseudo: str
+    password: str
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+    is_admin: int

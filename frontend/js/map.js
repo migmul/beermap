@@ -40,9 +40,16 @@ const MapService = {
         markersLayer.clearLayers();
         bars.forEach(bar => {
             const isHH = Utils.isCurrentlyHappyHour(bar.hh_hours);
+            const isOpen = Utils.isOpen(bar.standard_hours);
+            
+            // Logique de couleur (Vert > Jaune > Gris)
+            let markerColor = '#808080'; // Gris par défaut (Fermé)
+            if (isHH) markerColor = '#4CAF50'; // Vert (Happy Hour)
+            else if (isOpen) markerColor = '#DAA520'; // Jaune ocre (Ouvert standard)
+
             const markerIcon = L.divIcon({
                 className: 'custom-icon',
-                html: `<div style="background-color: ${isHH ? '#ff4500' : '#DAA520'}; width: 20px; height: 20px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 5px rgba(0,0,0,0.5);"></div>`,
+                html: `<div style="background-color: ${markerColor}; width: 20px; height: 20px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 5px rgba(0,0,0,0.5);"></div>`,
                 iconSize: [24, 24]
             });
 

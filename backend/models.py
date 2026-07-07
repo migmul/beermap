@@ -1,6 +1,15 @@
 from sqlalchemy import Column, Integer, String, Float, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
 from .database import Base
+from sqlalchemy import Column, Integer, String, Float, Boolean, ForeignKey
+
+class User(Base):
+    __tablename__ = "users"
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String, unique=True, index=True)
+    pseudo = Column(String, unique=True, index=True)
+    hashed_password = Column(String)
+    is_admin = Column(Integer, default=0) 
 
 class Bar(Base):
     __tablename__ = "bars"
@@ -15,6 +24,7 @@ class Bar(Base):
     hh_hours = Column(String)       # Ex: "17:00-20:00"
     tags = Column(String)           # Ex: "Terrasse, WiFi, PMR"
     image_url = Column(String, nullable=True) # Chemin vers le dossier static
+    status = Column(String, default="pending")
 
     menus = relationship("Menu", back_populates="bar")
 

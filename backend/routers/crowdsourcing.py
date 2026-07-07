@@ -5,6 +5,7 @@ from .. import crud, schemas, models, database
 import shutil
 import os
 import uuid
+from PIL import Image
 
 router = APIRouter(prefix="/crowdsourcing", tags=["crowdsourcing"])
 
@@ -30,11 +31,12 @@ async def suggest_bar(
     """Ajout participatif ou modification d'un bar."""
     image_url = None
     if image:
-        ext = image.filename.split('.')[-1]
-        filename = f"{uuid.uuid4()}.{ext}"
+        filename = f"{uuid.uuid4()}.webp" # Conversion WEBP
         filepath = os.path.join(UPLOAD_DIR, filename)
-        with open(filepath, "wb") as buffer:
-            shutil.copyfileobj(image.file, buffer)
+        
+        # Ouverture avec Pillow, conversion RGB pour éviter les erreurs avec les PNG transparents
+        img = Image.open(image.file).convert("RGB")
+        img.save(filepath, "WEBP", quality=80) # Compression à 80%
         image_url = f"/static/images/{filename}"
 
     # --- MODE MODIFICATION ---

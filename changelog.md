@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.4] - 2026-07-07
+### Ajouts
+- **Système de comptes & Auth JWT** : Ajout d'une table Utilisateurs (Email, Pseudo, Mot de passe hashé via `bcrypt`).
+- **Validation (Admin)** : Les nouvelles suggestions ont le statut `pending`. Un compte Admin peut les valider/rejeter via un panneau dédié. Le bouton "Supprimer" est exclusif à l'Admin.
+- **Compression d'images** : Utilisation de `Pillow` pour convertir toutes les photos uploadées en `.webp` (léger et optimisé).
+
+### Modifications
+- **Filtres (Sliders)** : Remplacement de la case "Pinte < 5€" par deux sliders (Prix standard et Prix HH) avec affichage en temps réel de la valeur.
+- **UI/UX Couleurs** : Les checkbox et sliders utilisent le jaune d'accentuation.
+- **État d'ouverture (Marqueurs)** : Vert = Happy Hour en cours / Jaune = Ouvert / Gris = Fermé.
+
 ## [1.3] - 2026-07-07
 ### Ajouts
 - **Préférence de thème** : Sauvegarde du choix Light/Dark mode via `localStorage` pour qu'il persiste au rechargement.

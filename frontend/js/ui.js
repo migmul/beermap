@@ -102,6 +102,18 @@ const UI = {
         document.querySelector('.close-btn').addEventListener('click', this.closeModals);
         document.querySelector('.close-btn-add').addEventListener('click', this.closeModals);
         
+        // NOUVEAU : Fermeture des modales Compte et Admin
+        document.querySelector('.close-btn-login').addEventListener('click', this.closeModals);
+        document.querySelector('.close-btn-admin').addEventListener('click', this.closeModals);
+        
+        // NOUVEAU : Ouverture modale Compte
+        document.getElementById('nav-login').addEventListener('click', (e) => {
+            e.preventDefault();
+            document.getElementById('login-modal').classList.remove('hidden');
+        });
+
+        document.getElementById('fab-add').addEventListener('click', () => this.openCrowdsourcingModal(false));
+        
         document.getElementById('fab-add').addEventListener('click', () => this.openCrowdsourcingModal(false));
         document.getElementById('btn-edit-bar').addEventListener('click', () => this.openCrowdsourcingModal(true));
 

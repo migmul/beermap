@@ -16,6 +16,8 @@
         <nav class="main-nav">
             <a href="#" class="active">Vue carte</a>
             <a href="#">Vue liste</a>
+            <a href="#" id="nav-login">Compte</a>
+            <a href="#" id="nav-admin" class="hidden">Admin</a>     
             <button id="theme-toggle" class="glass-btn">🌞/🌙</button>
         </nav>
     </header>
@@ -26,11 +28,16 @@
         <input type="text" id="search-input" class="glass-input" placeholder="Nom ou adresse du bar...">
         
         <div class="filters-vertical">
-            <label class="toggle">
-                <input type="checkbox" id="filter-hh"> 🔥 En Happy Hour
+            <label class="toggle" style="color: var(--accent); font-weight: bold;">
+                <input type="checkbox" id="filter-hh"> 🔥 Actuellement en Happy Hour
             </label>
-            <label class="toggle">
-                <input type="checkbox" id="filter-price"> 🍺 Pinte < 5€
+            <label style="margin-top: 10px; font-size: 0.9em;">
+                Pinte standard max : <span id="val-price">15</span>€
+                <input type="range" id="filter-price" class="glass-slider" min="2" max="15" step="0.5" value="15">
+            </label>
+            <label style="font-size: 0.9em;">
+                Pinte Happy Hour max : <span id="val-hh">15</span>€
+                <input type="range" id="filter-hh-price" class="glass-slider" min="2" max="15" step="0.5" value="15">
             </label>
         </div>
     </aside>
@@ -53,7 +60,7 @@
             
             <div class="modal-actions">
                 <button id="btn-edit-bar" class="glass-btn">✏️ Modifier</button>
-                <button id="btn-delete-bar" class="glass-btn danger">🗑️ Supprimer</button>
+                <!-- <button id="btn-delete-bar" class="glass-btn danger">🗑️ Supprimer</button> -->
             </div>
         </div>
     </div>
@@ -61,9 +68,9 @@
     <!-- Bouton d'ajout -->
     <button id="fab-add" class="glass-btn fab">+</button>
     
+    <!-- Modale d'ajout/Modif -->
     <div id="add-modal" class="modal hidden">
         <div class="modal-content glass-panel animated-modal">
-            <!-- Modale d'Ajout/Modification -->
             <span class="close-btn-add">&times;</span>
             <h2 id="form-title" style="margin-bottom: 25px;">Suggérer un nouveau bar</h2>
             <form id="add-bar-form">
@@ -72,7 +79,6 @@
                 <input type="text" id="add-address" placeholder="Adresse complète" required class="glass-input">
                 <input type="text" id="add-phone" placeholder="Téléphone" class="glass-input">
                 
-                <!-- Nouveaux champs Time -->
                 <div style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
                     <label style="width: 100px; font-size: 0.9em;">Horaires :</label>
                     <input type="time" id="add-hours-start" class="glass-input" style="margin-bottom: 0;">
@@ -87,7 +93,6 @@
                     <input type="time" id="add-hh-end" class="glass-input" style="margin-bottom: 0;">
                 </div>
                 
-                <!-- Menu Simplifié : Prix de la pinte -->
                 <div style="display: flex; gap: 10px; margin-bottom: 15px;">
                     <input type="number" step="0.10" id="add-price-normal" placeholder="Prix Pinte (€)" class="glass-input">
                     <input type="number" step="0.10" id="add-price-hh" placeholder="Prix Pinte HH (€)" class="glass-input">
@@ -100,6 +105,31 @@
                 
                 <button type="submit" id="submit-btn" class="glass-btn primary" style="width: 100%;">Enregistrer</button>
             </form>
+        </div>
+    </div>
+
+    <!-- Modale Connexion/Inscription -->
+    <div id="login-modal" class="modal hidden">
+        <div class="modal-content glass-panel animated-modal">
+            <span class="close-btn-login" style="position:absolute; right:15px; top:10px; cursor:pointer; color:var(--accent); font-size:24px;">&times;</span>
+            <h2>Mon Compte</h2>
+            <form id="login-form">
+                <input type="text" id="login-pseudo" placeholder="Pseudo" class="glass-input" required>
+                <input type="password" id="login-pwd" placeholder="Mot de passe" class="glass-input" required>
+                <button type="submit" class="glass-btn primary" style="width:100%;">Connexion</button>
+            </form>
+            <p style="text-align:center; margin-top:15px; font-size:0.9em;">
+                Pas de compte ? <a href="#" id="switch-register" style="color:var(--accent);">S'inscrire</a>
+            </p>
+        </div>
+    </div>
+    
+    <!-- Modale d'Admin (Panneau de validation) -->
+    <div id="admin-modal" class="modal hidden">
+        <div class="modal-content glass-panel animated-modal" style="max-width: 600px;">
+            <span class="close-btn-admin" style="position:absolute; right:15px; top:10px; cursor:pointer; color:var(--accent); font-size:24px;">&times;</span>
+            <h2>Validation des bars</h2>
+            <ul id="admin-list" style="list-style: none; padding: 0; max-height: 300px; overflow-y: auto;"></ul>
         </div>
     </div>
 

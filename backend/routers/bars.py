@@ -1,21 +1,34 @@
 from fastapi import APIRouter, Depends, Query, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-from .. import crud, schemas, models, database
+from .. import crud, schemas, models, database, security
 
 router = APIRouter(prefix="/bars", tags=["bars"])
 
 @router.get("/", response_model=List[schemas.BarResponse])
 def read_bars(
-    max_pint_price: float = Query(None, description="Prix maximum d'une pinte"),
+    max_pint_price: float = Query(None),
+    max_hh_price: float = Query(None),
     db: Session = Depends(database.get_db)
 ):
-    """Récupère la liste des bars, avec des filtres optionnels."""
+    query = db.query(models.Bar).filter(models.Bar.status == "approved")
     bars = crud.get_bars(db, max_pint_price=max_pint_price)
     return bars
 
+@router.get("/pending", response_model=List[schemas.BarResponse])
+def read_pending_bars(db: Session = Depends(database.get_db), admin: models.User = Depends(security.get_current_admin)):
+    return db.query(models.Bar).filter(models.Bar.status == "pending").all()
+
+@router.patch("/{bar_id}/status")
+def update_status(bar_id: int, status: str, db: Session = Depends(database.get_db), admin: models.User = Depends(security.get_current_admin)):
+    bar = db.query(models.Bar).filter(models.Bar.id == bar_id).first()
+    if bar:
+        bar.status = status
+        db.commit()
+    return {"message": "Statut mis à jour"}
+
 @router.delete("/{bar_id}")
-def delete_bar(bar_id: int, db: Session = Depends(database.get_db)):
+def delete_bar(bar_id: int, db: Session = Depends(database.get_db), admin: models.User = Depends(security.get_current_admin)):
     """Supprime un bar de la base de données."""
     bar = db.query(models.Bar).filter(models.Bar.id == bar_id).first()
     if not bar:
