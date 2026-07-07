@@ -51,13 +51,15 @@ async def suggest_bar(
             db_bar.tags = tags
             db_bar.latitude = latitude
             db_bar.longitude = longitude
+            
+            db_bar.status = "pending" 
+            
             if image_url: 
                 db_bar.image_url = image_url
             db.commit()
-            return {"message": "Bar modifié"}
+            return {"message": "Modification enregistrée et en attente de validation."}
 
     # --- MODE CRÉATION ---
-    # (Le code arrive ici uniquement si bar_id est vide, car le bloc au-dessus contient un "return")
     bar_data = schemas.BarCreate(
         name=name, 
         latitude=latitude, 

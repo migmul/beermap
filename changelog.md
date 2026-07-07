@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.4.2] - 2026-07-07
+### Corrections
+- **Filtrage des statuts (Backend)** : Correction de la requête de base de données pour s'assurer que seuls les bars avec le statut `approved` sont envoyés sur la carte publique.
+- **Modifications en attente** : Lorsqu'un utilisateur modifie un bar existant, celui-ci repasse automatiquement en statut `pending` et disparait de la carte le temps d'être validé par un administrateur.
+
 ## [1.4.1] - 2026-07-07
 ### Modifications
 - **Visibilité Sliders** : Ajustement CSS pour rendre la piste des sliders visible en thèmes clair et sombre.

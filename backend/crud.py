@@ -2,10 +2,9 @@ from sqlalchemy.orm import Session
 from . import models, schemas
 
 def get_bars(db: Session, max_pint_price: float = None):
-    query = db.query(models.Bar)
+    query = db.query(models.Bar).filter(models.Bar.status == "approved")
     
     if max_pint_price:
-        # Jointure pour filtrer les bars où une pinte coûte moins cher que le max spécifié
         query = query.join(models.Menu).filter(
             models.Menu.item_name.ilike("%pinte%"),
             ((models.Menu.hh_price <= max_pint_price) | (models.Menu.normal_price <= max_pint_price))
