@@ -1,3 +1,5 @@
+import os
+from dotenv import load_dotenv
 from passlib.context import CryptContext
 from datetime import datetime, timedelta
 import jwt
@@ -6,8 +8,10 @@ from fastapi import Depends, HTTPException
 from sqlalchemy.orm import Session
 from . import database, models
 
+load_dotenv()
+
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-SECRET_KEY = "@ukRxcbtYauaxiGdK8elNYtUnRZtLBVj4CHOBwCI0f^MCnAtsx$E&%d^cydxo@c4wPotb%w^vqHp&*Vx8luTiRPX1cKKbugZWe$&VE2Ok!PEtfugV!i25SGogJfKMX3%" # À sécuriser en production
+SECRET_KEY = os.getenv("BEERMAP_SECRET_KEY", "@ukRxcbtYauaxiGdK8elNYtUnRZtLBVj4CHOBwCI0f^MCnAtsx$E&%d^cydxo@c4wPotb%w^vqHp&*Vx8luTiRPX1cKKbugZWe$&VE2Ok!PEtfugV!i25SGogJfKMX3%")
 ALGORITHM = "HS256"
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
