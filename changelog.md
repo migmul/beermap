@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.6] - 2026-07-08
+### Ajouts
+- **Migration automatique (DB)** : Remplacement de `Base.metadata.create_all` par une fonction intelligente au démarrage du serveur qui vérifie l'existence des tables et ajoute dynamiquement les colonnes manquantes (Migration SQLite à chaud).
+- **Numéro de version** : Affichage de "v1.6" en gris clair à côté du logo dans le header.
+- **PWA Ready** : Ajout du fichier `manifest.json` et d'un Service Worker basique (`sw.js`) pour rendre l'application installable sur smartphone.
+
+### Modifications
+- **Responsive Design (Mobile)** :
+  - La barre latérale (Sidebar) devient rétractable via un bouton flottant 🔍 en bas à gauche de l'écran sur mobile.
+  - Le header s'adapte en hauteur et la navigation devient plus compacte.
+
 ## [1.5.3] - 2026-07-08
 ### Ajouts
 - **Filtre Ouvert** : Ajout d'une case à cocher dans la barre latérale pour n'afficher que les bars actuellement ouverts.

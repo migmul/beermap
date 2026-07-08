@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BeerMap</title>
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#DAA520">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+
+    <!-- Styles -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/base.css">
@@ -12,7 +19,10 @@
 <body>
     <!-- En-tête pleine largeur -->
     <header class="glass-panel top-header">
-        <div class="logo">🍺 BeerMap</div>
+        <div class="logo" style="display: flex; align-items: baseline; gap: 8px;">
+            🍺 BeerMap
+            <span style="font-size: 0.5em; color: #a0a0a0; font-weight: normal;">v1.6</span>
+        </div>
         <nav class="main-nav">
             <a href="#" id="nav-map" class="active">Vue carte</a>
             <a href="#" id="nav-list">Vue liste</a>
@@ -23,6 +33,7 @@
     </header>
 
     <!-- Barre latérale gauche -->
+    <button id="mobile-filter-btn" class="glass-btn fab" style="bottom: 30px; left: 20px; right: auto; z-index: 1001; background: var(--glass-bg); color: var(--text-color); font-size: 20px;">🔍</button>
     <aside class="glass-panel sidebar">
         <h3>Recherche & Filtres</h3>
         <input type="text" id="search-input" class="glass-input" placeholder="Nom ou adresse du bar...">
@@ -87,7 +98,7 @@
                 <input type="text" id="add-phone" placeholder="Téléphone" class="glass-input">
                 <input type="url" id="add-website" placeholder="Site web (URL ex: https://...)" class="glass-input">
                 <input type="url" id="add-menu-link" placeholder="Lien vers le menu (URL)" class="glass-input">
-                                
+
                 <!-- NOUVELLE GRILLE 7 JOURS -->
                 <label style="font-size: 0.9em; margin-bottom: 5px; display: block;">Horaires d'ouverture (laisser vide si fermé) :</label>
                 <div class="schedule-grid" style="display: grid; grid-template-columns: 40px 1fr 1fr; gap: 5px; margin-bottom: 15px; align-items: center; background: rgba(0,0,0,0.05); padding: 10px; border-radius: 8px;">
@@ -173,5 +184,14 @@
     <script src="js/ui.js"></script>
     <script src="js/map.js"></script>
     <script src="js/app.js"></script>
+        <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('Service Worker enregistré', reg.scope))
+                    .catch(err => console.warn('Erreur Service Worker', err));
+            });
+        }
+    </script>
 </body>
 </html>

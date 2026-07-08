@@ -4,9 +4,28 @@ from fastapi.middleware.cors import CORSMiddleware
 from . import models
 from .database import engine
 from .routers import bars, crowdsourcing, auth
+from sqlalchemy import inspect, text
 
-# Création des tables SQLite au démarrage
+# Création des tables si elles n'existent pas du tout
 models.Base.metadata.create_all(bind=engine)
+
+# --- MIGRATION À CHAUD (SQLite) ---
+def upgrade_db():
+    inspector = inspect(engine)
+    with engine.connect() as conn:
+        if "bars" in inspector.get_table_names():
+            columns = [col['name'] for col in inspector.get_columns("bars")]
+            
+            # Liste des colonnes ajoutées récemment à vérifier
+            if "original_bar_id" not in columns:
+                conn.execute(text("ALTER TABLE bars ADD COLUMN original_bar_id INTEGER"))
+            if "website" not in columns:
+                conn.execute(text("ALTER TABLE bars ADD COLUMN website VARCHAR"))
+            if "menu_link" not in columns:
+                conn.execute(text("ALTER TABLE bars ADD COLUMN menu_link VARCHAR"))
+            conn.commit()
+
+upgrade_db()
 
 app = FastAPI(title="Happy Hour Map API")
 

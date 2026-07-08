@@ -281,5 +281,24 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('filter-open').addEventListener('change', loadAndRenderBars);
     document.getElementById('filter-hh').addEventListener('change', loadAndRenderBars);
     
+    // Gestion du panneau de filtres sur mobile
+    const mobileFilterBtn = document.getElementById('mobile-filter-btn');
+    const sidebar = document.querySelector('.sidebar');
+    
+    if (mobileFilterBtn) {
+        mobileFilterBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+            mobileFilterBtn.textContent = sidebar.classList.contains('open') ? '❌' : '🔍';
+        });
+    }
+
+    // Fermer les filtres si on clique sur la carte (sur mobile)
+    document.getElementById('map-container').addEventListener('click', () => {
+        if (sidebar.classList.contains('open')) {
+            sidebar.classList.remove('open');
+            mobileFilterBtn.textContent = '🔍';
+        }
+    });
+    
     loadAndRenderBars();
 });

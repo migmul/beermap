@@ -203,3 +203,38 @@ input[type="checkbox"] { accent-color: var(--accent); }
     .bar-card { width: 100%; }
     #list-container { padding-left: 20px !important; }
 }
+
+/* --- RESPONSIVE DESIGN (MOBILE) --- */
+@media (max-width: 800px) {
+    /* Header plus compact */
+    .top-header { padding: 10px 15px; flex-direction: column; gap: 10px; }
+    .main-nav { width: 100%; justify-content: space-between; font-size: 0.9em; }
+    
+    /* Bouton thème en haut à droite */
+    #theme-toggle { position: absolute; top: 10px; right: 15px; padding: 4px 8px; }
+
+    /* La sidebar devient un panneau coulissant invisible par défaut */
+    .sidebar {
+        top: auto;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 60vh;
+        border-radius: 20px 20px 0 0;
+        transform: translateY(100%);
+        transition: transform 0.3s ease-in-out;
+        box-shadow: 0 -10px 40px rgba(0,0,0,0.3);
+    }
+    
+    /* Classe ajoutée via JS pour ouvrir la sidebar */
+    .sidebar.open { transform: translateY(0); }
+    
+    /* Bouton filtre mobile visible */
+    #mobile-filter-btn { display: block !important; }
+    
+    /* Ajustement des modales */
+    .modal-content { padding: 20px; width: 95%; max-height: 90vh; overflow-y: auto; }
+}
+
+/* Cache le bouton filtre sur PC */
+#mobile-filter-btn { display: none; }
