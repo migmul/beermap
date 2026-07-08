@@ -138,6 +138,30 @@ const UI = {
             menuContainer.appendChild(li);
         });
 
+        // Gestion du bouton Supprimer (Réservé aux Admins)
+        const btnDelete = document.getElementById('btn-delete-bar');
+        if (localStorage.getItem('beermap_isadmin') == 1) {
+            btnDelete.classList.remove('hidden');
+            
+            // Clonage pour éviter de cumuler les EventListeners des anciens bars cliqués
+            const newBtnDelete = btnDelete.cloneNode(true);
+            btnDelete.parentNode.replaceChild(newBtnDelete, btnDelete);
+            
+            newBtnDelete.addEventListener('click', async () => {
+                if (confirm(`Voulez-vous vraiment supprimer définitivement le bar "${bar.name}" ?`)) {
+                    try {
+                        await API.deleteBar(bar.id);
+                        UI.closeModals();
+                        loadAndRenderBars(); // Met à jour la carte et la liste
+                    } catch (error) {
+                        alert("Erreur lors de la suppression : " + error.message);
+                    }
+                }
+            });
+        } else {
+            btnDelete.classList.add('hidden');
+        }
+
         document.getElementById('bar-modal').classList.remove('hidden');
     },
 

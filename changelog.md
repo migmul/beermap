@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.7.4] - 2026-07-08
+### Corrections
+- **Modale Compte** : Ajout d'un espacement (`margin-bottom`) sous le titre "Mon compte" pour aérer l'interface avec le champ de texte "Pseudo" ou le message de bienvenue.
+- **Modale Bar (Admin)** : Réactivation du bouton "Supprimer" qui était commenté dans le code source. Il s'affiche désormais correctement, et uniquement si l'utilisateur est connecté avec un compte administrateur. L'action supprime le bar de la base de données et rafraîchit la carte.
+
 ## [1.7.3] - 2026-07-08
 ### Corrections
 - **UI** : Remplacement de l'ensemble des émojis statiques par la bibliothèque Phosphor Icons pour une esthétique unifiée sur tous les appareils.

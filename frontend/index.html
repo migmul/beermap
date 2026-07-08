@@ -42,13 +42,13 @@
         <input type="text" id="search-input" class="glass-input" placeholder="Nom ou adresse du bar...">
         
         <div class="filters-vertical">
-            <label class="toggle hidden" id="label-filter-fav" style="font-weight: bold; color: #ff6b6b;">
+            <label class="toggle hidden" id="label-filter-fav">
                 <input type="checkbox" id="filter-fav"> Mes favoris
             </label>
-            <label class="toggle" style="font-weight: bold; color: var(--accent);">
+            <label class="toggle" style="color: var(--accent);">
                 <input type="checkbox" id="filter-open"> Ouvert
             </label>
-            <label class="toggle" style="font-weight: bold; color: var(--aux);">
+            <label class="toggle" style="color: var(--aux);">
                 <input type="checkbox" id="filter-hh"> Happy Hour en cours
             </label>
             <label style="margin-top: 10px; font-size: 0.9em;">
@@ -88,7 +88,7 @@
             
             <div class="modal-actions">
                 <button id="btn-edit-bar" class="glass-btn"><i class="ph ph-pencil"></i> Modifier</button>
-                <!-- <button id="btn-delete-bar" class="glass-btn danger">🗑️ Supprimer</button> -->
+                <button id="btn-delete-bar" class="glass-btn danger hidden"><i class="ph ph-trash"></i> Supprimer</button>
             </div>
         </div>
     </div>
@@ -169,7 +169,7 @@
             <span class="close-btn-login" style="position:absolute; right:15px; top:10px; cursor:pointer; color:var(--accent); font-size:24px;">&times;</span>
             
             <!-- Le bloc que vous m'avez demandé de placer est ici : -->
-            <h2 id="auth-title">Mon Compte</h2>
+            <h2 id="auth-title" style="margin-bottom: 25px;">Mon Compte</h2>
             <div id="logged-in-panel" class="hidden" style="text-align: center;">
                 <h3 id="welcome-message">Bienvenue !</h3>
                 <button id="btn-logout" class="glass-btn danger" style="margin-top: 20px;">Se déconnecter</button>
