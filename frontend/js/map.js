@@ -117,7 +117,7 @@ const MapService = {
             
             // Code couleur de l'état
             let statusDot = '⚫'; // Gris
-            if (isHH) statusDot = '🟢';
+            if (isHH) statusDot = '🔴';
             else if (isOpen) statusDot = '🟡';
 
             // Trouver le prix de la pinte pour l'affichage rapide
