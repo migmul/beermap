@@ -15,9 +15,9 @@ class BarBase(BaseModel):
     name: str
     latitude: float
     longitude: float
-    address: str
+    address: Optional[str] = None
     phone: Optional[str] = None
-    standard_hours: str
+    standard_hours: Optional[str] = None
     hh_hours: Optional[str] = None
     tags: Optional[str] = None
 

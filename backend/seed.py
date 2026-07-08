@@ -6,22 +6,9 @@ Usage :
     cd backend
     python seed.py
 """
-<<<<<<< HEAD
-
-import requests
-import sys
-import os
-
-# Permet d'importer les modules du backend depuis ce fichier standalone
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-
-from database import SessionLocal, engine, Base
-from models import Bar
-=======
 import requests
 from backend.database import SessionLocal, engine, Base
 from backend.models import Bar
->>>>>>> f9677f3 (v1.4.3)
 
 # ── Création des tables si elles n'existent pas encore ──────────────────────
 Base.metadata.create_all(bind=engine)
@@ -44,9 +31,6 @@ out body;
 def fetch_bars_from_osm() -> list[dict]:
     """Interroge l'API Overpass et retourne la liste des éléments bruts."""
     print("📡 Requête vers l'API Overpass (OpenStreetMap)…")
-<<<<<<< HEAD
-    response = requests.get(OVERPASS_URL, params={"data": OVERPASS_QUERY}, timeout=90)
-=======
     
     # Ajout de l'en-tête User-Agent obligatoire pour l'API Overpass
     headers = {
@@ -59,7 +43,6 @@ def fetch_bars_from_osm() -> list[dict]:
         headers=headers, 
         timeout=90
     )
->>>>>>> f9677f3 (v1.4.3)
     response.raise_for_status()
     elements = response.json().get("elements", [])
     print(f"✅ {len(elements)} établissements trouvés sur OSM.")

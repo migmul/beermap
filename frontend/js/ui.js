@@ -49,9 +49,9 @@ const UI = {
         UI.currentBarData = bar; // Stocker pour le bouton de modification
 
         document.getElementById('modal-title').textContent = bar.name;
-        document.getElementById('modal-address').textContent = bar.address;
-        document.getElementById('modal-phone').textContent = bar.phone || "Non renseigné";
-        document.getElementById('modal-hours').textContent = bar.standard_hours;
+        document.getElementById('modal-address').textContent = bar.address || "Adresse inconnue";
+        document.getElementById('modal-phone').textContent = bar.phone || "N/A";
+        document.getElementById('modal-hours').textContent = bar.standard_hours || "N/A";
         document.getElementById('modal-hh').textContent = bar.hh_hours || "Aucun";
         
         const imgEl = document.getElementById('modal-image');
