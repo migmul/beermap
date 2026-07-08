@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.5.2] - 2026-07-08
+### Ajouts
+- **Amélioration de l'affichage des horaires** : On regroupe les jours ayant les mêmes horaires pour une meilleure lisibilité.
+### Corrections
+- **Compatibilité OSM (Horaires)** : La logique ne comprenait pas que Su-Th (Dimanche à Jeudi) chevauchait une fin de semaine, ce qui annulait la lecture.
+
 ## [1.5.1] - 2026-07-08
 ### Corrections
 - **Compatibilité OSM (Horaires)** : Refonte de la gestion des horaires. Le système est maintenant capable de lire, interpréter et formater les horaires au format OpenStreetMap (ex: `Mo-Th 16:00-00:00; Fr-Sa 16:00-01:00`). L'indicateur Ouvert/Fermé prend désormais en compte le jour de la semaine et la gestion des horaires dépassant minuit (ex: `20:00-02:00`).

@@ -116,10 +116,10 @@ def seed():
                 address=build_address(tags),
                 phone=tags.get("phone") or tags.get("contact:phone"),
                 standard_hours=tags.get("opening_hours"),
-                hh_hours=None,          # Non disponible sur OSM
+                hh_hours=None,
                 tags=build_tags(tags),
-                image_url=None,         # Pas d'image OSM
-                status="pending",       # Validation manuelle requise
+                image_url=None,
+                status="approved",
             )
             db.add(bar)
             added += 1

@@ -15,7 +15,8 @@ async function loadAndRenderBars() {
         // Recherche textuelle
         if (searchQuery) {
             const matchName = bar.name.toLowerCase().includes(searchQuery);
-            const matchAddress = bar.address.toLowerCase().includes(searchQuery);
+            const matchAddress = bar.address ? bar.address.toLowerCase().includes(searchQuery) : false;
+            
             if (!matchName && !matchAddress) return false;
         }
 

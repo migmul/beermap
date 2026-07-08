@@ -49,11 +49,19 @@ const UI = {
         UI.currentBarData = bar; // Stocker pour le bouton de modification
 
         document.getElementById('modal-title').textContent = bar.name;
-        document.getElementById('modal-address').textContent = bar.address || "Adresse inconnue";
-        document.getElementById('modal-phone').textContent = bar.phone || "N/A";
-        document.getElementById('modal-hours').innerHTML = Utils.formatHoursToDisplay(bar.standard_hours) || "N/A";
-        document.getElementById('modal-hh').textContent = bar.hh_hours || "Aucun";
+        document.getElementById('modal-address').textContent = bar.address || "Adresse inconnue (Coordonnées GPS uniquement)";
+        document.getElementById('modal-phone').textContent = bar.phone || "Non renseigné";
         
+        // CORRECTION ICI : On gère les horaires standards ET Happy Hour dans le même bloc modal-hours
+        let hoursHTML = Utils.formatHoursToDisplay(bar.standard_hours);
+        if (bar.hh_hours) {
+            hoursHTML += `<br><br><strong style="color:var(--accent)">Happy Hour :</strong><br>${Utils.formatHoursToDisplay(bar.hh_hours)}`;
+        }
+        document.getElementById('modal-hours').innerHTML = hoursHTML;
+        
+        // (Supprimez la ligne qui faisait: document.getElementById('modal-hh').textContent = bar.hh_hours ...)
+
+        // Image logic
         const imgEl = document.getElementById('modal-image');
         if (bar.image_url) {
             imgEl.src = `${API_BASE_URL}${bar.image_url}`;
