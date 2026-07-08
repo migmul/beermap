@@ -32,7 +32,7 @@ app = FastAPI(title="Happy Hour Map API")
 # Configuration CORS pour autoriser le frontend (typiquement sur un autre port en dev)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # A restreindre en production
+    allow_origins=["https://beermap.migmul.fr", "http://localhost:8080", "http://127.0.0.1:8080"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
