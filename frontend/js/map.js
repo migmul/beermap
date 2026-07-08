@@ -42,14 +42,18 @@ const MapService = {
             const isHH = Utils.isCurrentlyHappyHour(bar.hh_hours);
             const isOpen = Utils.isOpen(bar.standard_hours);
             
-            // Logique de couleur (Vert > Jaune > Gris)
-            let markerColor = '#808080'; // Gris par défaut (Fermé)
-            if (isHH) markerColor = '#4CAF50'; // Vert (Happy Hour)
-            else if (isOpen) markerColor = '#DAA520'; // Jaune ocre (Ouvert standard)
+            // Couleurs des marqueurs
+            let markerColor = '#c0b7a48e';
+            if (isHH) markerColor = '#ff6f59';
+            else if (isOpen) markerColor = '#ffb300';
+
+            if (isHH || isOpen) markerBorder = '2px';
+            else markerBorder = '0px';
+            
 
             const markerIcon = L.divIcon({
                 className: 'custom-icon',
-                html: `<div style="background-color: ${markerColor}; width: 20px; height: 20px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 5px rgba(0,0,0,0.5);"></div>`,
+                html: `<div style="background-color: ${markerColor}; width: 20px; height: 20px; border-radius: 50%; border: ${markerBorder} solid white; box-shadow: 0 0 5px rgba(0,0,0,0.5);"></div>`,
                 iconSize: [24, 24]
             });
 

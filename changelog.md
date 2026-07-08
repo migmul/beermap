@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.1] - 2026-07-08
+### Corrections
+- **Couleurs** : Refonte de la palette graphique du site.
+- **Header** : Header flottant avec quatre bords arrondis.
+- **Marqueurs** : Opacité différente et suppresion de la bordure pour les bars fermés et couleurs en accord avec la palette graphique.
+- **Police d'écriture** : Ajout de la police "Gluten" pour l'ensemble du site.
+
 ## [1.6] - 2026-07-08
 ### Ajouts
 - **Migration automatique (DB)** : Remplacement de `Base.metadata.create_all` par une fonction intelligente au démarrage du serveur qui vérifie l'existence des tables et ajoute dynamiquement les colonnes manquantes (Migration SQLite à chaud).

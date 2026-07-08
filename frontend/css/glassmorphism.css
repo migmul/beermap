@@ -7,19 +7,29 @@
     border-radius: 16px;
 }
 
-.floating-header {
-    position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
+/* Header global */
+.top-header {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    width: calc(100% - 30px);
     z-index: 1000;
-    padding: 15px 30px;
     display: flex;
-    gap: 20px;
+    justify-content: space-between;
     align-items: center;
-    width: 90%;
-    max-width: 800px;
+    padding: 15px 30px;
+    border-radius: 32px;
 }
+
+.logo { font-size: 1.5rem; font-weight: bold; color: var(--accent); }
+
+.main-nav { display: flex; gap: 20px; align-items: center; }
+.main-nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+.main-nav a.active { color: var(--accent); border-bottom: 2px solid var(--accent); }
 
 .glass-btn {
     background: var(--glass-bg);
@@ -96,28 +106,6 @@
     margin-right: 5px;
 }
 
-/* Header global */
-.top-header {
-    position: fixed;
-    top: 0; left: 0; width: 100%;
-    z-index: 1000;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 30px;
-    border-radius: 0 0 16px 16px; /* Bords arrondis seulement en bas */
-}
-
-.logo { font-size: 1.5rem; font-weight: bold; color: var(--accent); }
-
-.main-nav { display: flex; gap: 20px; align-items: center; }
-.main-nav a {
-    color: var(--text-color);
-    text-decoration: none;
-    font-weight: 500;
-}
-.main-nav a.active { color: var(--accent); border-bottom: 2px solid var(--accent); }
-
 /* Sidebar verticale gauche */
 .sidebar {
     position: fixed;
@@ -151,7 +139,7 @@
 .glass-slider {
     -webkit-appearance: none;
     width: 100%;
-    height: 8px;
+    height: 4px;
     /* Un fond semi-transparent noir (Light mode) ou blanc (Dark mode) selon le texte */
     background: rgba(128, 128, 128, 0.4); 
     border-radius: 4px;
@@ -207,7 +195,15 @@ input[type="checkbox"] { accent-color: var(--accent); }
 /* --- RESPONSIVE DESIGN (MOBILE) --- */
 @media (max-width: 800px) {
     /* Header plus compact */
-    .top-header { padding: 10px 15px; flex-direction: column; gap: 10px; }
+    .top-header { 
+        top: 10px; 
+        left: 10px; 
+        width: calc(100% - 20px); 
+        padding: 10px 15px; 
+        flex-direction: column; 
+        gap: 10px; 
+    }
+
     .main-nav { width: 100%; justify-content: space-between; font-size: 0.9em; }
     
     /* Bouton thème en haut à droite */
