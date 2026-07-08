@@ -11,7 +11,34 @@ const MapService = {
         
         markersLayer = L.markerClusterGroup({
             chunkedLoading: true,
-            maxClusterRadius: 20
+            maxClusterRadius: 20,
+            iconCreateFunction: function(cluster) {
+                const markers = cluster.getAllChildMarkers();
+                
+                // Priorité : rouge (HH en cours) > jaune (ouvert) > gris
+                const hasHH   = markers.some(m => m.options.barStatus === 'hh');
+                const hasOpen = markers.some(m => m.options.barStatus === 'open');
+
+                let bg = '#9e9e9e';     // gris par défaut
+                if (hasHH)   bg = '#ff6f59'; // rouge si HH en cours
+                else if (hasOpen) bg = '#ffb300'; // jaune si bar ouvert
+
+                const count = cluster.getChildCount();
+                return L.divIcon({
+                    className: '',
+                    html: `<div style="
+                        background-color: ${bg};
+                        width: 34px; height: 34px;
+                        border-radius: 50%;
+                        border: 2px solid white;
+                        box-shadow: 0 0 6px rgba(0,0,0,0.5);
+                        display: flex; align-items: center; justify-content: center;
+                        color: white; font-weight: bold; font-size: 13px;
+                    ">${count}</div>`,
+                    iconSize: [34, 34],
+                    iconAnchor: [17, 17]
+                });
+            }
         }).addTo(map);
 
         const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
@@ -64,7 +91,12 @@ const MapService = {
                 iconSize: [24, 24]
             });
 
-            const marker = L.marker([bar.latitude, bar.longitude], { icon: markerIcon });
+            const barStatus = isHH ? 'hh' : (isOpen ? 'open' : 'closed');
+            const marker = L.marker([bar.latitude, bar.longitude], {
+                icon: markerIcon,
+                barStatus: barStatus
+            });
+
             marker.on('click', () => onMarkerClick(bar));
             markersLayer.addLayer(marker);
         });

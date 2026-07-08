@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.7.1] - 2026-07-08
+### Corrections
+- **Clustering** : Changement de la couleur des clusters, en fonction de l'état des points qui le constitue.
+
 ## [1.7] - 2026-07-08
 ### Corrections
 - **UI** : Correction des espacements de la Vue Liste (padding-top ajusté) et de l'interligne écrasée dans les modales.
