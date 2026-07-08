@@ -212,7 +212,7 @@ function initAdmin() {
                 li.style.cssText = "display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--glass-border); padding: 10px 0;";
                 li.innerHTML = `
                     <span><strong>${bar.name}</strong> (${bar.address})</span>
-                    <div>
+                    <div style="flex-shrink:0; display:flex; gap:8px;">
                         <button class="glass-btn primary btn-approve" data-id="${bar.id}">✓</button>
                         <button class="glass-btn danger btn-reject" data-id="${bar.id}">✗</button>
                     </div>

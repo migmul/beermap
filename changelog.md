@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.7.2] - 2026-07-08
+### Corrections
+- **Vue Validation (Admin)** : Correction de l'alignement des boutons Accepter/Refuser qui passaient en vertical lorsque le nom d'un bar était trop long. Ajout de `flex-shrink: 0` et `display: flex; gap: 8px` sur le conteneur des boutons dans `initAdmin()` (`app.js`).
+
 ## [1.7.1] - 2026-07-08
 ### Corrections
 - **Clustering** : Changement de la couleur des clusters, en fonction de l'état des points qui le constitue.
