@@ -89,7 +89,7 @@ const MapService = {
             card.innerHTML = `
                 <h3><span>${bar.name}</span> <span>${statusDot}</span></h3>
                 <p>📍 ${bar.address}</p>
-                <p>🕒 ${bar.standard_hours || 'NC'} ${bar.hh_hours ? `(HH: ${bar.hh_hours})` : ''}</p>
+                <p>🕒 ${Utils.formatHoursToDisplay(bar.standard_hours, true)}</p>
                 <p style="font-weight: bold; color: var(--accent); margin-top: 5px;">${priceText}</p>
                 ${bar.image_url ? `<img src="${API_BASE_URL}${bar.image_url}" alt="Photo de ${bar.name}">` : ''}
                 <div class="tags">

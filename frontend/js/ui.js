@@ -51,7 +51,7 @@ const UI = {
         document.getElementById('modal-title').textContent = bar.name;
         document.getElementById('modal-address').textContent = bar.address || "Adresse inconnue";
         document.getElementById('modal-phone').textContent = bar.phone || "N/A";
-        document.getElementById('modal-hours').textContent = bar.standard_hours || "N/A";
+        document.getElementById('modal-hours').innerHTML = Utils.formatHoursToDisplay(bar.standard_hours) || "N/A";
         document.getElementById('modal-hh').textContent = bar.hh_hours || "Aucun";
         
         const imgEl = document.getElementById('modal-image');
@@ -101,11 +101,17 @@ const UI = {
             document.getElementById('add-tags').value = UI.currentBarData.tags || "";
             
             // Éclatement de la chaîne "10:00-02:00" pour remplir les inputs time
-            if (UI.currentBarData.standard_hours && UI.currentBarData.standard_hours.includes('-')) {
-                const [hStart, hEnd] = UI.currentBarData.standard_hours.split('-');
-                document.getElementById('add-hours-start').value = hStart;
-                document.getElementById('add-hours-end').value = hEnd;
-            }
+            const schedule = Utils.parseHours(UI.currentBarData.standard_hours);
+            Utils.DAYS.forEach(d => {
+                if (schedule[d] && schedule[d].includes('-')) {
+                    const [start, end] = schedule[d].split('-');
+                    document.getElementById(`add-h-${d}-start`).value = start;
+                    document.getElementById(`add-h-${d}-end`).value = end;
+                } else {
+                    document.getElementById(`add-h-${d}-start`).value = "";
+                    document.getElementById(`add-h-${d}-end`).value = "";
+                }
+            });
             if (UI.currentBarData.hh_hours && UI.currentBarData.hh_hours.includes('-')) {
                 const [hhStart, hhEnd] = UI.currentBarData.hh_hours.split('-');
                 document.getElementById('add-hh-start').value = hhStart;

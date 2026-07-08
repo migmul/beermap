@@ -59,10 +59,18 @@ function initCrowdsourcing() {
         formData.append('name', document.getElementById('add-name').value);
         formData.append('address', address);
         formData.append('phone', document.getElementById('add-phone').value);
+
+        let newSchedule = {};
+        Utils.DAYS.forEach(d => {
+            const start = document.getElementById(`add-h-${d}-start`).value;
+            const end = document.getElementById(`add-h-${d}-end`).value;
+            if (start && end) newSchedule[d] = `${start}-${end}`;
+        });
+        const stdHours = Utils.buildHoursString(newSchedule);
         
-        const stdHours = `${document.getElementById('add-hours-start').value}-${document.getElementById('add-hours-end').value}`;
+        formData.append('standard_hours', stdHours);
+
         const hhHours = `${document.getElementById('add-hh-start').value}-${document.getElementById('add-hh-end').value}`;
-        formData.append('standard_hours', stdHours.length > 2 ? stdHours : "");
         formData.append('hh_hours', hhHours.length > 2 ? hhHours : "");
         
         formData.append('tags', document.getElementById('add-tags').value);

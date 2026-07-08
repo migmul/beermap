@@ -54,7 +54,8 @@
             <img id="modal-image" src="" alt="Photo du bar" style="display:none; width:100%; border-radius: 8px; margin-bottom: 15px;">
             <p><strong>Adresse:</strong> <span id="modal-address"></span></p>
             <p><strong>Téléphone:</strong> <span id="modal-phone"></span></p>
-            <p><strong>Horaires:</strong> <span id="modal-hours"></span> (HH: <span id="modal-hh"></span>)</p>
+            <p><strong>Horaires:</strong></p>
+            <div id="modal-hours" style="margin-left: 10px; font-size: 0.9em; opacity: 0.9; line-height: 1.4;"></div>
             <div class="tags" id="modal-tags" style="margin: 10px 0;"></div>
             <h3>Menu</h3>
             <ul id="modal-menu" style="margin-bottom: 15px;"></ul>
@@ -80,11 +81,36 @@
                 <input type="text" id="add-address" placeholder="Adresse complète" required class="glass-input">
                 <input type="text" id="add-phone" placeholder="Téléphone" class="glass-input">
                 
-                <div style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
-                    <label style="width: 90px; font-size: 0.9em; white-space: nowrap; flex-shrink: 0;">Horaires :</label>
-                    <input type="time" id="add-hours-start" class="glass-input" style="margin-bottom: 0; padding: 5px;">
-                    <span>à</span>
-                    <input type="time" id="add-hours-end" class="glass-input" style="margin-bottom: 0; padding: 5px;">
+                <!-- NOUVELLE GRILLE 7 JOURS -->
+                <label style="font-size: 0.9em; margin-bottom: 5px; display: block;">Horaires d'ouverture (laisser vide si fermé) :</label>
+                <div class="schedule-grid" style="display: grid; grid-template-columns: 40px 1fr 1fr; gap: 5px; margin-bottom: 15px; align-items: center; background: rgba(0,0,0,0.05); padding: 10px; border-radius: 8px;">
+                    <span style="font-size: 0.8em; text-align: right; padding-right: 5px;">Lun</span>
+                    <input type="time" id="add-h-Mo-start" class="glass-input" style="margin: 0; padding: 5px;">
+                    <input type="time" id="add-h-Mo-end" class="glass-input" style="margin: 0; padding: 5px;">
+
+                    <span style="font-size: 0.8em; text-align: right; padding-right: 5px;">Mar</span>
+                    <input type="time" id="add-h-Tu-start" class="glass-input" style="margin: 0; padding: 5px;">
+                    <input type="time" id="add-h-Tu-end" class="glass-input" style="margin: 0; padding: 5px;">
+
+                    <span style="font-size: 0.8em; text-align: right; padding-right: 5px;">Mer</span>
+                    <input type="time" id="add-h-We-start" class="glass-input" style="margin: 0; padding: 5px;">
+                    <input type="time" id="add-h-We-end" class="glass-input" style="margin: 0; padding: 5px;">
+
+                    <span style="font-size: 0.8em; text-align: right; padding-right: 5px;">Jeu</span>
+                    <input type="time" id="add-h-Th-start" class="glass-input" style="margin: 0; padding: 5px;">
+                    <input type="time" id="add-h-Th-end" class="glass-input" style="margin: 0; padding: 5px;">
+
+                    <span style="font-size: 0.8em; text-align: right; padding-right: 5px;">Ven</span>
+                    <input type="time" id="add-h-Fr-start" class="glass-input" style="margin: 0; padding: 5px;">
+                    <input type="time" id="add-h-Fr-end" class="glass-input" style="margin: 0; padding: 5px;">
+
+                    <span style="font-size: 0.8em; text-align: right; padding-right: 5px;">Sam</span>
+                    <input type="time" id="add-h-Sa-start" class="glass-input" style="margin: 0; padding: 5px;">
+                    <input type="time" id="add-h-Sa-end" class="glass-input" style="margin: 0; padding: 5px;">
+
+                    <span style="font-size: 0.8em; text-align: right; padding-right: 5px;">Dim</span>
+                    <input type="time" id="add-h-Su-start" class="glass-input" style="margin: 0; padding: 5px;">
+                    <input type="time" id="add-h-Su-end" class="glass-input" style="margin: 0; padding: 5px;">
                 </div>
                 
                 <div style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">

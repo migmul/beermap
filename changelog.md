@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.5.1] - 2026-07-08
+### Corrections
+- **Compatibilité OSM (Horaires)** : Refonte de la gestion des horaires. Le système est maintenant capable de lire, interpréter et formater les horaires au format OpenStreetMap (ex: `Mo-Th 16:00-00:00; Fr-Sa 16:00-01:00`). L'indicateur Ouvert/Fermé prend désormais en compte le jour de la semaine et la gestion des horaires dépassant minuit (ex: `20:00-02:00`).
+- **Modale Ajout/Édition** : Remplacement du champ horaire unique par une grille permettant de définir l'ouverture et la fermeture pour chaque jour de la semaine.
+
 ## [1.5] - 2026-07-07
 ### Ajouts
 - **Vue Liste** : Création d'un mode d'affichage alternatif à la carte. La "Vue liste" affiche les bars filtrés sous forme de cartes (cards) dans une grille responsive, respectant le style Glassmorphism.
