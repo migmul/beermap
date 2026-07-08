@@ -4,9 +4,16 @@ let currentTileLayer;
 
 const MapService = {
     init() {
-        map = L.map('map-container', { zoomControl: false }).setView([46.603354, 1.888334], 6);
-        markersLayer = L.layerGroup().addTo(map);
+        map = L.map('map-container', { 
+            zoomControl: false,
+            maxZoom: 18
+        }).setView([46.603354, 1.888334], 6);
         
+        markersLayer = L.markerClusterGroup({
+            chunkedLoading: true,
+            maxClusterRadius: 20
+        }).addTo(map);
+
         const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
         this.setTheme(currentTheme);
         this.locateUser();

@@ -7,6 +7,7 @@ Usage :
     python seed.py
 """
 import requests
+import time
 from backend.database import SessionLocal, engine, Base
 from backend.models import Bar
 
@@ -34,7 +35,7 @@ def fetch_bars_from_osm() -> list[dict]:
     
     # Ajout de l'en-tête User-Agent obligatoire pour l'API Overpass
     headers = {
-        "User-Agent": "BeerMapApp/1.0 (miguel@miguelmuller.fr)"
+        "User-Agent": "BeerMapApp/1.7 (miguel@miguelmuller.fr)"
     }
     
     response = requests.get(

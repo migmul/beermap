@@ -48,7 +48,33 @@ const UI = {
     openBarModal(bar) {
         UI.currentBarData = bar; // Stocker pour le bouton de modification
 
-        document.getElementById('modal-title').textContent = bar.name;
+        document.getElementById('modal-name').textContent = bar.name;
+
+        // Indicateur statut (Dot)
+        const isHH = Utils.isCurrentlyHappyHour(bar.hh_hours);
+        const isOpen = Utils.isOpen(bar.standard_hours);
+        const statusDot = document.getElementById('modal-status-dot');
+        if (isHH) { statusDot.textContent = '🟢'; statusDot.title = "Happy Hour !"; }
+        else if (isOpen) { statusDot.textContent = '🟡'; statusDot.title = "Ouvert"; }
+        else { statusDot.textContent = '⚫'; statusDot.title = "Fermé"; }
+
+        // Bouton Favoris
+        const btnFav = document.getElementById('btn-fav');
+        if (localStorage.getItem('beermap_token')) {
+            btnFav.classList.remove('hidden');
+            btnFav.textContent = userFavorites.includes(bar.id) ? '❤️' : '🤍';
+            
+            // On clone le bouton pour supprimer les anciens eventListeners
+            const newBtnFav = btnFav.cloneNode(true);
+            btnFav.parentNode.replaceChild(newBtnFav, btnFav);
+            
+            newBtnFav.addEventListener('click', async () => {
+                const res = await API.toggleFavorite(bar.id);
+                newBtnFav.textContent = res.is_favorite ? '❤️' : '🤍';
+                loadAndRenderBars(); // Met à jour la carte en arrière plan
+            });
+        }
+
         document.getElementById('modal-address').textContent = bar.address || "Adresse inconnue (Coordonnées GPS uniquement)";
         document.getElementById('modal-phone').textContent = bar.phone || "Non renseigné";
         

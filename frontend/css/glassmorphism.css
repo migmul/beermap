@@ -84,6 +84,12 @@
     max-width: 500px;
     position: relative;
 }
+
+.modal-content p, .modal-content h3 {
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
 .close-btn, .close-btn-add {
     position: absolute; top: 15px; right: 20px;
     font-size: 24px; cursor: pointer; color: var(--accent);

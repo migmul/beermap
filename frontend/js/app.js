@@ -1,4 +1,5 @@
 let allBars = [];
+let userFavorites = [];
 
 async function loadAndRenderBars() {
     const isOpenFilter = document.getElementById('filter-open').checked;
@@ -7,8 +8,11 @@ async function loadAndRenderBars() {
     const maxHhPrice = parseFloat(document.getElementById('filter-hh-price').value);
     const searchQuery = document.getElementById('search-input').value.toLowerCase();
     
-    allBars = await API.fetchBars(); // Ne récupère que les "approved" grâce au backend
+    userFavorites = await API.fetchFavorites();
+    const isFavFilter = document.getElementById('filter-fav').checked;
     
+    allBars = await API.fetchBars(); // Ne récupère que les "approved" grâce au backend
+
     let barsToRender = allBars.filter(bar => {
         // Filtrage ouvert
         if (isOpenFilter && !Utils.isOpen(bar.standard_hours)) return false;
@@ -32,6 +36,8 @@ async function loadAndRenderBars() {
                 if (pinte.hh_price && pinte.hh_price > maxHhPrice) matchPrice = false;
             }
         }
+
+        if (isFavFilter && !userFavorites.includes(bar.id)) return false;
         return matchPrice;
     });
     
@@ -104,111 +110,90 @@ function initCrowdsourcing() {
     });
 }
 
-function initAuth() {
-    let isLoginMode = true;
-    const form = document.getElementById('login-form');
-    const switchBtn = document.getElementById('switch-register');
-    const title = form.previousElementSibling; 
-    const navLoginBtn = document.getElementById('nav-login');
-    const modalContent = document.querySelector('#login-modal .modal-content');
-    
-    // Contenu initial du formulaire (pour le restaurer après déconnexion)
-    const originalFormHTML = form.innerHTML;
-    const originalSwitchHTML = switchBtn.parentElement.innerHTML;
-
-    // --- Fonction utilitaire pour mettre à jour l'UI selon l'état ---
-    function updateAuthStateUI() {
-        const token = localStorage.getItem('beermap_token');
-        const isAdmin = localStorage.getItem('beermap_is_admin') === '1';
-
-        if (token) {
-            // Utilisateur CONNECTÉ
-            navLoginBtn.textContent = "Mon compte";
-            if (isAdmin) document.getElementById('nav-admin').classList.remove('hidden');
+    function initAuth() {
+        let isLoginMode = true;
+        const form = document.getElementById('login-form');
+        const switchBtn = document.getElementById('switch-register');
+        const title = document.getElementById('auth-title');
+        
+        // --- 1. Gestion de l'état (Connecté ou non) ---
+        const isLoggedIn = !!localStorage.getItem('beermap_token');
+        if (isLoggedIn) {
+            // Affichage UI Connecté
+            document.getElementById('label-filter-fav').classList.remove('hidden');
+            form.classList.add('hidden');
+            document.getElementById('logged-in-panel').classList.remove('hidden');
+            document.getElementById('welcome-message').textContent = `Bienvenue ${localStorage.getItem('beermap_pseudo')} !`;
+            switchBtn.parentElement.style.display = 'none'; // Masque le lien "Pas de compte ?"
             
-            // Remplace le contenu de la modale par le profil
-            title.textContent = "Bienvenue !";
-            form.innerHTML = `<button type="button" id="btn-logout" class="glass-btn danger" style="width:100%; margin-top:20px;">Se déconnecter</button>`;
-            switchBtn.parentElement.innerHTML = ""; // Masque le lien d'inscription
-            
-            // Écouteur déconnexion
-            document.getElementById('btn-logout').addEventListener('click', () => {
-                localStorage.removeItem('beermap_token');
-                localStorage.removeItem('beermap_is_admin');
-                document.getElementById('nav-admin').classList.add('hidden');
-                updateAuthStateUI();
-                UI.closeModals();
-                alert("Vous avez été déconnecté.");
-                window.location.reload(); // Optionnel : recharge pour être sûr de purger la mémoire
-            });
-
-        } else {
-            // Utilisateur DÉCONNECTÉ
-            navLoginBtn.textContent = "Connexion";
-            document.getElementById('nav-admin').classList.add('hidden');
-            
-            // Restaure le formulaire
-            title.textContent = "Connexion";
-            form.innerHTML = originalFormHTML;
-            
-            // On doit recréer l'élément de switch car innerHTML l'a écrasé
-            const p = document.createElement('p');
-            p.style.cssText = "text-align:center; margin-top:15px; font-size:0.9em;";
-            p.innerHTML = `Pas de compte ? <a href="#" id="switch-register" style="color:var(--accent);">S'inscrire</a>`;
-            if(!document.getElementById('switch-register')) modalContent.appendChild(p);
-            
-            // Ré-attacher les écouteurs sur le formulaire fraîchement restauré
-            attachFormListeners();
+            // Activation de l'onglet Admin si besoin
+            if (localStorage.getItem('beermap_isadmin') == 1) {
+                document.getElementById('nav-admin').classList.remove('hidden');
+            }
         }
-    }
 
-    // --- Gestion du formulaire de connexion/inscription ---
-    function attachFormListeners() {
-        const currentForm = document.getElementById('login-form');
-        const currentSwitch = document.getElementById('switch-register');
-        if(!currentForm || !currentSwitch) return;
-
-        currentSwitch.addEventListener('click', (e) => {
-            e.preventDefault();
-            isLoginMode = !isLoginMode;
-            title.textContent = isLoginMode ? "Connexion" : "Créer un compte";
-            currentForm.querySelector('button').textContent = isLoginMode ? "Connexion" : "S'inscrire";
-            currentSwitch.textContent = isLoginMode ? "S'inscrire" : "Se connecter";
+        // --- 2. Déconnexion ---
+        document.getElementById('btn-logout').addEventListener('click', () => {
+            localStorage.clear();
+            location.reload(); // Recharge la page pour tout remettre à zéro proprement
         });
 
-        currentForm.addEventListener('submit', async (e) => {
+        // --- 3. Bascule Connexion / Inscription ---
+        switchBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            isLoginMode = !isLoginMode;
+            title.textContent = isLoginMode ? 'Mon Compte' : 'Créer un compte';
+            form.querySelector('button').textContent = isLoginMode ? 'Connexion' : 'S\'inscrire';
+            switchBtn.textContent = isLoginMode ? 'S\'inscrire' : 'Se connecter';
+            
+            // Affiche/Masque l'email et la confirmation
+            const emailInput = document.getElementById('login-email');
+            const confirmInput = document.getElementById('login-pwd-confirm');
+            
+            if (!isLoginMode) {
+                emailInput.classList.remove('hidden'); emailInput.required = true;
+                confirmInput.classList.remove('hidden'); confirmInput.required = true;
+            } else {
+                emailInput.classList.add('hidden'); emailInput.required = false;
+                confirmInput.classList.add('hidden'); confirmInput.required = false;
+            }
+        });
+
+        // --- 4. Soumission du formulaire (Connexion ou Inscription) ---
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
             const pseudo = document.getElementById('login-pseudo').value;
             const pwd = document.getElementById('login-pwd').value;
-
+            
             try {
-                if (isLoginMode) {
+                if (!isLoginMode) {
+                    // VERIFICATION MOT DE PASSE (Inscription)
+                    const confirmPwd = document.getElementById('login-pwd-confirm').value;
+                    const email = document.getElementById('login-email').value;
+                    
+                    if (pwd !== confirmPwd) {
+                        alert("Les mots de passe ne correspondent pas !");
+                        return;
+                    }
+                    await API.register(email, pseudo, pwd);
+                    alert("Compte créé ! Vous pouvez maintenant vous connecter.");
+                    switchBtn.click(); // Repasse en mode login
+                    
+                } else {
+                    // CONNEXION
                     const res = await API.login(pseudo, pwd);
                     localStorage.setItem('beermap_token', res.access_token);
-                    localStorage.setItem('beermap_is_admin', res.is_admin);
-                    updateAuthStateUI();
-                    UI.closeModals();
+                    localStorage.setItem('beermap_isadmin', res.is_admin);
+                    localStorage.setItem('beermap_pseudo', res.pseudo); // NOUVEAU: Stocke le pseudo
+                    
                     alert("Connecté avec succès !");
-                } else {
-                    await API.register(`${pseudo}@beermap.fr`, pseudo, pwd); 
-                    alert("Compte créé ! Vous pouvez maintenant vous connecter.");
-                    currentSwitch.click(); 
+                    location.reload(); // Le plus propre pour recharger les favoris et l'UI
                 }
             } catch (error) {
                 alert(error.message);
             }
         });
     }
-
-    // --- Écouteur Ouverture Modale ---
-    navLoginBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        document.getElementById('login-modal').classList.remove('hidden');
-    });
-
-    // Initialisation
-    updateAuthStateUI();
-}
 
 function initAdmin() {
     document.getElementById('nav-admin').addEventListener('click', async (e) => {
@@ -278,6 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('search-input').addEventListener('input', loadAndRenderBars);
+    document.getElementById('filter-fav').addEventListener('change', loadAndRenderBars);
     document.getElementById('filter-open').addEventListener('change', loadAndRenderBars);
     document.getElementById('filter-hh').addEventListener('change', loadAndRenderBars);
     

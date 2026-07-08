@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.7] - 2026-07-08
+### Corrections
+- **UI** : Correction des espacements de la Vue Liste (padding-top ajusté) et de l'interligne écrasée dans les modales.
+- **Carte** : Passage au fond de carte JawgMaps pour avoir les labels en Français (Grand Est au lieu de Greater East).
+
+### Ajouts
+- **Clustering** : Intégration de Leaflet.markercluster. Les points proches se regroupent en dézoomant pour une meilleure lisibilité.
+- **Modale Bar** : Ajout des indicateurs de statut (🟢 Ouvert, 🟡 Happy Hour, ⚫ Fermé) et d'un bouton Favori (si connecté).
+- **Comptes Utilisateurs** :
+  - Inscription : Ajout du champ Email et de la confirmation du mot de passe.
+  - Modale Mon Compte : Affiche désormais "Bienvenue [pseudo] !".
+- **Favoris** : Ajout d'un système de favoris persistants en base de données, avec un nouveau filtre "Mes Favoris" dans la barre latérale.
+
 ## [1.6.1] - 2026-07-08
 ### Corrections
 - **Couleurs** : Refonte de la palette graphique du site.

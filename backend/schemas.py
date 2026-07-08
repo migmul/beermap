@@ -30,6 +30,7 @@ class BarResponse(BarBase):
     id: int
     image_url: Optional[str] = None
     menus: List[MenuResponse] = []
+    is_favorite: Optional[bool] = False
     
     class Config:
         from_attributes = True
@@ -43,3 +44,4 @@ class Token(BaseModel):
     access_token: str
     token_type: str
     is_admin: int
+    pseudo: str

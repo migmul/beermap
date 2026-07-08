@@ -1,7 +1,11 @@
-from sqlalchemy import Column, Integer, String, Float, Boolean, ForeignKey
+from sqlalchemy import Column, Integer, String, Float, Boolean, ForeignKey, Table
 from sqlalchemy.orm import relationship
 from .database import Base
-from sqlalchemy import Column, Integer, String, Float, Boolean, ForeignKey
+
+user_favorites = Table('user_favorites', Base.metadata,
+    Column('user_id', Integer, ForeignKey('users.id'), primary_key=True),
+    Column('bar_id', Integer, ForeignKey('bars.id'), primary_key=True)
+)
 
 class User(Base):
     __tablename__ = "users"
@@ -9,7 +13,8 @@ class User(Base):
     email = Column(String, unique=True, index=True)
     pseudo = Column(String, unique=True, index=True)
     hashed_password = Column(String)
-    is_admin = Column(Integer, default=0) 
+    favorites = relationship("Bar", secondary=user_favorites)
+    is_admin = Column(Integer, default=0)
 
 class Bar(Base):
     __tablename__ = "bars"

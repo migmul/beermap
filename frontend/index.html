@@ -12,6 +12,8 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/glassmorphism.css">
@@ -39,6 +41,9 @@
         <input type="text" id="search-input" class="glass-input" placeholder="Nom ou adresse du bar...">
         
         <div class="filters-vertical">
+            <label class="toggle hidden" id="label-filter-fav" style="font-weight: bold; color: #ff6b6b;">
+                <input type="checkbox" id="filter-fav"> Mes favoris
+            </label>
             <label class="toggle" style="font-weight: bold; color: var(--accent);">
                 <input type="checkbox" id="filter-open"> Ouvert
             </label>
@@ -57,13 +62,17 @@
     </aside>
 
     <main id="map-container"></main>
-    <main id="list-container" class="hidden" style="padding-top: 100px; padding-left: 360px; padding-right: 20px; height: 100vh; overflow-y: auto; display: flex; flex-wrap: wrap; gap: 20px; align-content: flex-start;"></main>
+    <main id="list-container" class="hidden" style="padding-top: 90px; padding-left: 360px; padding-right: 20px; height: 100vh; overflow-y: auto; display: flex; flex-wrap: wrap; gap: 20px; align-content: flex-start;"></main>
 
     <!-- Modale Détails du Bar -->
     <div id="bar-modal" class="modal hidden">
         <div class="modal-content glass-panel">
             <span class="close-btn">&times;</span>
-            <h2 id="modal-title">Nom du Bar</h2>
+            <h2 id="modal-title" style="display:flex; align-items:center; gap:10px;">
+                <span id="modal-name">Nom du Bar</span>
+                <span id="modal-status-dot" style="font-size: 0.6em;">⚫</span>
+                <button id="btn-fav" class="glass-btn hidden" style="margin-left:auto; padding:4px 8px;">🤍</button>
+            </h2>
             <div id="hh-indicator" class="indicator hidden">🔥 Happy Hour en cours !</div>
             <img id="modal-image" src="" alt="Photo du bar" style="display:none; width:100%; border-radius: 8px; margin-bottom: 15px;">
             <p><strong>Adresse:</strong> <span id="modal-address"></span></p>
@@ -157,14 +166,23 @@
     <div id="login-modal" class="modal hidden">
         <div class="modal-content glass-panel animated-modal">
             <span class="close-btn-login" style="position:absolute; right:15px; top:10px; cursor:pointer; color:var(--accent); font-size:24px;">&times;</span>
-            <h2>Mon compte</h2>
+            
+            <!-- Le bloc que vous m'avez demandé de placer est ici : -->
+            <h2 id="auth-title">Mon Compte</h2>
+            <div id="logged-in-panel" class="hidden" style="text-align: center;">
+                <h3 id="welcome-message">Bienvenue !</h3>
+                <button id="btn-logout" class="glass-btn danger" style="margin-top: 20px;">Se déconnecter</button>
+            </div>
+            
             <form id="login-form">
+                <input type="email" id="login-email" placeholder="Adresse Email" class="glass-input hidden">
                 <input type="text" id="login-pseudo" placeholder="Pseudo" class="glass-input" required>
                 <input type="password" id="login-pwd" placeholder="Mot de passe" class="glass-input" required>
-                <button type="submit" class="glass-btn primary" style="width:100%;">Connexion</button>
+                <input type="password" id="login-pwd-confirm" placeholder="Confirmer mot de passe" class="glass-input hidden">
+                <button type="submit" class="glass-btn primary" style="width:100%">Connexion</button>
             </form>
-            <p style="text-align:center; margin-top:15px; font-size:0.9em;">
-                Pas de compte ? <a href="#" id="switch-register" style="color:var(--accent);">S'inscrire</a>
+            <p style="text-align:center; margin-top:15px; font-size:0.9em">
+                Pas de compte ? <a href="#" id="switch-register" style="color:var(--accent)">S'inscrire</a>
             </p>
         </div>
     </div>
@@ -179,6 +197,7 @@
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/api.js"></script>
     <script src="js/ui.js"></script>

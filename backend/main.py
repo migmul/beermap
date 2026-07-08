@@ -23,6 +23,8 @@ def upgrade_db():
                 conn.execute(text("ALTER TABLE bars ADD COLUMN website VARCHAR"))
             if "menu_link" not in columns:
                 conn.execute(text("ALTER TABLE bars ADD COLUMN menu_link VARCHAR"))
+            if "user_favorites" not in inspector.get_table_names():
+                models.user_favorites.create(engine)
             conn.commit()
 
 upgrade_db()

@@ -74,5 +74,17 @@ const API = {
             throw new Error(err.detail || "Erreur d'inscription");
         }
         return response.json();
+    },
+
+    async toggleFavorite(barId) {
+        const res = await fetch(`${API_BASE_URL}/auth/favorites/${barId}`, { method: 'POST', headers: this.getHeaders() });
+        return res.json();
+    },
+
+    async fetchFavorites() {
+        if (!this.getToken()) return [];
+        const res = await fetch(`${API_BASE_URL}/auth/favorites`, { headers: this.getHeaders() });
+        if(res.ok) return res.json();
+        return [];
     }
 };
