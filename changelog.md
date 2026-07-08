@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.5.3] - 2026-07-08
+### Ajouts
+- **Filtre Ouvert** : Ajout d'une case à cocher dans la barre latérale pour n'afficher que les bars actuellement ouverts.
+- **Informations Web** : Ajout des champs "Site internet" et "Lien du menu". Visibles dans la modale d'information s'ils sont renseignés, et modifiables via le formulaire de suggestion.
+- **Seed OSM (Web)** : Le script `seed.py` récupère désormais les tags OpenStreetMap `website` (ou `contact:website`) et `menu` (ou `url:menu`).
+
 ## [1.5.2] - 2026-07-08
 ### Ajouts
 - **Amélioration de l'affichage des horaires** : On regroupe les jours ayant les mêmes horaires pour une meilleure lisibilité.

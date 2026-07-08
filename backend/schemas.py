@@ -20,6 +20,8 @@ class BarBase(BaseModel):
     standard_hours: Optional[str] = None
     hh_hours: Optional[str] = None
     tags: Optional[str] = None
+    website: Optional[str] = None
+    menu_link: Optional[str] = None
 
 class BarCreate(BarBase):
     pass

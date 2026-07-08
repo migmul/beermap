@@ -52,7 +52,18 @@ const UI = {
         document.getElementById('modal-address').textContent = bar.address || "Adresse inconnue (Coordonnées GPS uniquement)";
         document.getElementById('modal-phone').textContent = bar.phone || "Non renseigné";
         
-        // CORRECTION ICI : On gère les horaires standards ET Happy Hour dans le même bloc modal-hours
+        const webCont = document.getElementById('modal-website-container');
+        if(bar.website) {
+            document.getElementById('modal-website').href = bar.website;
+            webCont.classList.remove('hidden');
+        } else webCont.classList.add('hidden');
+
+        const menuCont = document.getElementById('modal-menu-link-container');
+        if(bar.menu_link) {
+            document.getElementById('modal-menu-link').href = bar.menu_link;
+            menuCont.classList.remove('hidden');
+        } else menuCont.classList.add('hidden');
+        
         let hoursHTML = Utils.formatHoursToDisplay(bar.standard_hours);
         if (bar.hh_hours) {
             hoursHTML += `<br><br><strong style="color:var(--accent)">Happy Hour :</strong><br>${Utils.formatHoursToDisplay(bar.hh_hours)}`;
@@ -106,6 +117,8 @@ const UI = {
             document.getElementById('add-name').value = UI.currentBarData.name;
             document.getElementById('add-address').value = UI.currentBarData.address;
             document.getElementById('add-phone').value = UI.currentBarData.phone || "";
+            document.getElementById('add-website').value = UI.currentBarData.website || "";
+            document.getElementById('add-menu-link').value = UI.currentBarData.menu_link || "";
             document.getElementById('add-tags').value = UI.currentBarData.tags || "";
             
             // Éclatement de la chaîne "10:00-02:00" pour remplir les inputs time
@@ -130,6 +143,8 @@ const UI = {
         } else {
             document.getElementById('form-title').textContent = "Ajouter un bar";
             document.getElementById('add-bar-id').value = ""; 
+            document.getElementById('add-website').value = "";
+            document.getElementById('add-menu-link').value = "";
         }
         
         document.getElementById('add-modal').classList.remove('hidden');

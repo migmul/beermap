@@ -28,6 +28,9 @@
         <input type="text" id="search-input" class="glass-input" placeholder="Nom ou adresse du bar...">
         
         <div class="filters-vertical">
+            <label class="toggle" style="font-weight: bold;">
+                <input type="checkbox" id="filter-open"> 🟡 Actuellement Ouvert
+            </label>
             <label class="toggle" style="color: var(--accent); font-weight: bold;">
                 <input type="checkbox" id="filter-hh"> 🔥 Actuellement en Happy Hour
             </label>
@@ -54,6 +57,8 @@
             <img id="modal-image" src="" alt="Photo du bar" style="display:none; width:100%; border-radius: 8px; margin-bottom: 15px;">
             <p><strong>Adresse:</strong> <span id="modal-address"></span></p>
             <p><strong>Téléphone:</strong> <span id="modal-phone"></span></p>
+            <p id="modal-website-container" class="hidden"><strong>Site Web:</strong> <a id="modal-website" href="#" target="_blank" style="color: var(--accent);">Lien</a></p>
+            <p id="modal-menu-link-container" class="hidden"><strong>Menu complet:</strong> <a id="modal-menu-link" href="#" target="_blank" style="color: var(--accent);">Voir le menu</a></p>
             <p><strong>Horaires:</strong></p>
             <div id="modal-hours" style="margin-left: 10px; font-size: 0.9em; opacity: 0.9; line-height: 1.4;"></div>
             <div class="tags" id="modal-tags" style="margin: 10px 0;"></div>
@@ -80,7 +85,9 @@
                 <input type="text" id="add-name" placeholder="Nom du bar" required class="glass-input">
                 <input type="text" id="add-address" placeholder="Adresse complète" required class="glass-input">
                 <input type="text" id="add-phone" placeholder="Téléphone" class="glass-input">
-                
+                <input type="url" id="add-website" placeholder="Site web (URL ex: https://...)" class="glass-input">
+                <input type="url" id="add-menu-link" placeholder="Lien vers le menu (URL)" class="glass-input">
+                                
                 <!-- NOUVELLE GRILLE 7 JOURS -->
                 <label style="font-size: 0.9em; margin-bottom: 5px; display: block;">Horaires d'ouverture (laisser vide si fermé) :</label>
                 <div class="schedule-grid" style="display: grid; grid-template-columns: 40px 1fr 1fr; gap: 5px; margin-bottom: 15px; align-items: center; background: rgba(0,0,0,0.05); padding: 10px; border-radius: 8px;">

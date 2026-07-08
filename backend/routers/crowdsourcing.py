@@ -25,6 +25,8 @@ async def suggest_bar(
     bar_id: Optional[int] = Form(None),
     pint_price: Optional[float] = Form(None),
     pint_hh_price: Optional[float] = Form(None),
+    website: Optional[str] = Form(None),
+    menu_link: Optional[str] = Form(None),
     image: UploadFile = File(None),
     db: Session = Depends(database.get_db)
 ):
@@ -44,8 +46,10 @@ async def suggest_bar(
         # On ne modifie plus l'existant. On crée un brouillon.
         bar_data = schemas.BarCreate(
             name=name, latitude=latitude, longitude=longitude, address=address,
-            standard_hours=standard_hours, hh_hours=hh_hours, tags=tags, phone=phone
+            standard_hours=standard_hours, hh_hours=hh_hours, tags=tags, phone=phone,
+            website=website, menu_link=menu_link
         )
+        # ...
         db_draft = crud.create_bar(db, bar_data)
         db_draft.original_bar_id = bar_id
         if image_url: 
@@ -61,6 +65,8 @@ async def suggest_bar(
         address=address,
         standard_hours=standard_hours, 
         hh_hours=hh_hours,
+        website=website,
+        menu_link=menu_link,
         tags=tags,
         phone=phone
     )

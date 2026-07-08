@@ -1,6 +1,7 @@
 let allBars = [];
 
 async function loadAndRenderBars() {
+    const isOpenFilter = document.getElementById('filter-open').checked;
     const isHhFilter = document.getElementById('filter-hh').checked;
     const maxPrice = parseFloat(document.getElementById('filter-price').value);
     const maxHhPrice = parseFloat(document.getElementById('filter-hh-price').value);
@@ -9,6 +10,8 @@ async function loadAndRenderBars() {
     allBars = await API.fetchBars(); // Ne récupère que les "approved" grâce au backend
     
     let barsToRender = allBars.filter(bar => {
+        // Filtrage ouvert
+        if (isOpenFilter && !Utils.isOpen(bar.standard_hours)) return false;
         // Filtrage HH
         if (isHhFilter && !Utils.isCurrentlyHappyHour(bar.hh_hours)) return false;
         
@@ -60,6 +63,8 @@ function initCrowdsourcing() {
         formData.append('name', document.getElementById('add-name').value);
         formData.append('address', address);
         formData.append('phone', document.getElementById('add-phone').value);
+        formData.append('website', document.getElementById('add-website').value);
+        formData.append('menu_link', document.getElementById('add-menu-link').value);
 
         let newSchedule = {};
         Utils.DAYS.forEach(d => {
@@ -273,6 +278,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('search-input').addEventListener('input', loadAndRenderBars);
+    document.getElementById('filter-open').addEventListener('change', loadAndRenderBars);
     document.getElementById('filter-hh').addEventListener('change', loadAndRenderBars);
     
     loadAndRenderBars();

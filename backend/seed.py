@@ -99,6 +99,9 @@ def seed():
             lat = el.get("lat")
             lon = el.get("lon")
 
+            website = tags.get("website") or tags.get("contact:website")
+            menu_link = tags.get("menu") or tags.get("url:menu") or tags.get("menu:url") or tags.get("website:menu")
+
             # Vérification anti-doublon (nom + coordonnées)
             existing = (
                 db.query(Bar)
@@ -118,6 +121,8 @@ def seed():
                 standard_hours=tags.get("opening_hours"),
                 hh_hours=None,
                 tags=build_tags(tags),
+                website = website,
+                menu_link = menu_link,
                 image_url=None,
                 status="approved",
             )

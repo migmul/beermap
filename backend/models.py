@@ -24,6 +24,8 @@ class Bar(Base):
     hh_hours = Column(String)
     tags = Column(String)
     image_url = Column(String, nullable=True)
+    website = Column(String, nullable=True)
+    menu_link = Column(String, nullable=True)
     status = Column(String, default="pending") 
     original_bar_id = Column(Integer, ForeignKey("bars.id"), nullable=True)
 
