@@ -7,13 +7,14 @@ const UI = {
         const savedTheme = localStorage.getItem('beermap_theme') || 'dark';
         document.documentElement.setAttribute('data-theme', savedTheme);
 
+        toggleBtn.innerHTML = savedTheme === 'dark' ? '<i class="ph ph-sun"></i>' : '<i class="ph ph-moon"></i>';
         toggleBtn.addEventListener('click', () => {
             const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
             const newTheme = isDark ? 'light' : 'dark';
-            
             document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('beermap_theme', newTheme); // Sauvegarde
+            localStorage.setItem('beermap_theme', newTheme);
             MapService.setTheme(newTheme);
+            toggleBtn.innerHTML = newTheme === 'dark' ? '<i class="ph ph-sun"></i>' : '<i class="ph ph-moon"></i>';
         });
     },
 
@@ -54,15 +55,22 @@ const UI = {
         const isHH = Utils.isCurrentlyHappyHour(bar.hh_hours);
         const isOpen = Utils.isOpen(bar.standard_hours);
         const statusDot = document.getElementById('modal-status-dot');
-        if (isHH) { statusDot.textContent = '🟢'; statusDot.title = "Happy Hour !"; }
-        else if (isOpen) { statusDot.textContent = '🟡'; statusDot.title = "Ouvert"; }
-        else { statusDot.textContent = '⚫'; statusDot.title = "Fermé"; }
+        if (isHH) { 
+            statusDot.innerHTML = '<i class="ph-fill ph-circle" style="color: #ff6f59;"></i>'; 
+            statusDot.title = "Happy Hour !"; 
+        } else if (isOpen) { 
+            statusDot.innerHTML = '<i class="ph-fill ph-circle" style="color: #ffb300;"></i>'; 
+            statusDot.title = "Ouvert"; 
+        } else { 
+            statusDot.innerHTML = '<i class="ph-fill ph-circle" style="color: gray;"></i>'; 
+            statusDot.title = "Fermé"; 
+        }
 
         // Bouton Favoris
         const btnFav = document.getElementById('btn-fav');
         if (localStorage.getItem('beermap_token')) {
             btnFav.classList.remove('hidden');
-            btnFav.textContent = userFavorites.includes(bar.id) ? '❤️' : '🤍';
+            btnFav.innerHTML = userFavorites.includes(bar.id) ? '<i class="ph-fill ph-heart" style="color: #ff6b6b;"></i>' : '<i class="ph ph-heart"></i>';
             
             // On clone le bouton pour supprimer les anciens eventListeners
             const newBtnFav = btnFav.cloneNode(true);
@@ -70,8 +78,8 @@ const UI = {
             
             newBtnFav.addEventListener('click', async () => {
                 const res = await API.toggleFavorite(bar.id);
-                newBtnFav.textContent = res.is_favorite ? '❤️' : '🤍';
-                loadAndRenderBars(); // Met à jour la carte en arrière plan
+                newBtnFav.innerHTML = res.is_favorite ? '<i class="ph-fill ph-heart" style="color: #ff6b6b;"></i>' : '<i class="ph ph-heart"></i>';
+                loadAndRenderBars(); 
             });
         }
 

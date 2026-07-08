@@ -1,6 +1,9 @@
 # Changelog
 
-- Passage du rond vert au rond rouge pour les bars en happy hour
+## [1.7.3] - 2026-07-08
+### Corrections
+- **UI** : Remplacement de l'ensemble des émojis statiques par la bibliothèque Phosphor Icons pour une esthétique unifiée sur tous les appareils.
+- **Carte & Modale** : Uniformisation de l'indicateur d'Happy Hour qui devient rouge (`#ff6f59`) partout pour plus de clarté.
 
 ## [1.7.2] - 2026-07-08
 ### Corrections

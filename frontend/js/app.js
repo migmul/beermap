@@ -213,8 +213,8 @@ function initAdmin() {
                 li.innerHTML = `
                     <span><strong>${bar.name}</strong> (${bar.address})</span>
                     <div style="flex-shrink:0; display:flex; gap:8px;">
-                        <button class="glass-btn primary btn-approve" data-id="${bar.id}">✓</button>
-                        <button class="glass-btn danger btn-reject" data-id="${bar.id}">✗</button>
+                        <button class="glass-btn primary btn-approve" data-id="${bar.id}"><i class="ph ph-check"></i></button>
+                        <button class="glass-btn danger btn-reject" data-id="${bar.id}"><i class="ph ph-x"></i></button>
                     </div>
                 `;
                 list.appendChild(li);
@@ -274,7 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (mobileFilterBtn) {
         mobileFilterBtn.addEventListener('click', () => {
             sidebar.classList.toggle('open');
-            mobileFilterBtn.textContent = sidebar.classList.contains('open') ? '❌' : '🔍';
+            mobileFilterBtn.innerHTML = sidebar.classList.contains('open') ? '<i class="ph ph-x"></i>' : '<i class="ph ph-magnifying-glass"></i>';
         });
     }
 
@@ -282,7 +282,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('map-container').addEventListener('click', () => {
         if (sidebar.classList.contains('open')) {
             sidebar.classList.remove('open');
-            mobileFilterBtn.textContent = '🔍';
+            mobileFilterBtn.innerHTML = '<i class="ph ph-magnifying-glass"></i>';
         }
     });
     

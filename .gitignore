@@ -3,3 +3,4 @@ database.db
 backend/static/images
 .DS_Store
 .env
+.vscode

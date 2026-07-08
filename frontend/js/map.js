@@ -116,15 +116,15 @@ const MapService = {
             const isOpen = Utils.isOpen(bar.standard_hours);
             
             // Code couleur de l'état
-            let statusDot = '⚫'; // Gris
-            if (isHH) statusDot = '🔴';
-            else if (isOpen) statusDot = '🟡';
+            let statusDot = '<i class="ph-fill ph-circle" style="color: gray;"></i>';
+            if (isHH) statusDot = '<i class="ph-fill ph-circle" style="color: #ff6f59;"></i>'; // Rouge HH
+            else if (isOpen) statusDot = '<i class="ph-fill ph-circle" style="color: #ffb300;"></i>'; // Jaune Ouvert
 
             // Trouver le prix de la pinte pour l'affichage rapide
             let priceText = "Prix NC";
             if (bar.menus && bar.menus.length > 0) {
                 const pinte = bar.menus.find(m => m.item_name.toLowerCase().includes('pinte'));
-                if (pinte) priceText = `🍺 ${pinte.normal_price}€ ${pinte.hh_price ? '(HH: '+pinte.hh_price+'€)' : ''}`;
+                if (pinte) priceText = `<i class="ph ph-beer-stein"></i> ${pinte.normal_price}€ ${pinte.hh_price ? '(HH: '+pinte.hh_price+'€)' : ''}`;
             }
 
             const card = document.createElement('div');
@@ -133,13 +133,13 @@ const MapService = {
             // On prépare la string du Happy Hour s'il y en a un
             let hhText = "";
             if (bar.hh_hours && bar.hh_hours !== "A définir" && bar.hh_hours !== "NC") {
-                 hhText = `<br><span style="color:var(--accent); font-size:0.9em;">🔥 HH : ${Utils.formatHoursToDisplay(bar.hh_hours, true).replace("Aujourd'hui : ", "")}</span>`;
+                hhText = `<br><span style="color:var(--accent); font-size:0.9em;"><i class="ph-fill ph-fire"></i> HH : ${Utils.formatHoursToDisplay(bar.hh_hours, true).replace("Aujourd'hui : ", "")}</span>`;
             }
 
             card.innerHTML = `
                 <h3><span>${bar.name}</span> <span>${statusDot}</span></h3>
-                <p>📍 ${bar.address || 'N/A'}</p>
-                <p>🕒 ${Utils.formatHoursToDisplay(bar.standard_hours, true)} ${hhText}</p>
+                <p><i class="ph-fill ph-map-pin"></i> ${bar.address || 'N/A'}</p>
+                <p><i class="ph-fill ph-clock"></i> ${Utils.formatHoursToDisplay(bar.standard_hours, true)} ${hhText}</p>
                 <p style="font-weight: bold; color: var(--accent); margin-top: 5px;">${priceText}</p>
                 ${bar.image_url ? `<img src="${API_BASE_URL}${bar.image_url}" alt="Photo de ${bar.name}">` : ''}
                 <div class="tags">

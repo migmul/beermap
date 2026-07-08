@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/glassmorphism.css">
@@ -30,12 +31,12 @@
             <a href="#" id="nav-list">Vue liste</a>
             <a href="#" id="nav-login">Compte</a>
             <a href="#" id="nav-admin" class="hidden">Admin</a>
-            <button id="theme-toggle" class="glass-btn">🌞/🌙</button>
+            <button id="theme-toggle" class="glass-btn"><i class="ph ph-sun"></i></button>
         </nav>
     </header>
 
     <!-- Barre latérale gauche -->
-    <button id="mobile-filter-btn" class="glass-btn fab" style="bottom: 30px; left: 20px; right: auto; z-index: 1001; background: var(--glass-bg); color: var(--text-color); font-size: 20px;">🔍</button>
+    <button id="mobile-filter-btn" class="glass-btn fab" style="bottom: 30px; left: 20px; right: auto; z-index: 1001; background: var(--glass-bg); color: var(--text-color); font-size: 20px;"><i class="ph ph-magnifying-glass"></i></button>
     <aside class="glass-panel sidebar">
         <h3>Recherche & Filtres</h3>
         <input type="text" id="search-input" class="glass-input" placeholder="Nom ou adresse du bar...">
@@ -70,10 +71,10 @@
             <span class="close-btn">&times;</span>
             <h2 id="modal-title" style="display:flex; align-items:center; gap:10px;">
                 <span id="modal-name">Nom du Bar</span>
-                <span id="modal-status-dot" style="font-size: 0.6em;">⚫</span>
-                <button id="btn-fav" class="glass-btn hidden" style="margin-left:auto; padding:4px 8px;">🤍</button>
+                <span id="modal-status-dot" style="font-size: 0.8em;"><i class="ph-fill ph-circle" style="color: gray;"></i></span>
+                <button id="btn-fav" class="glass-btn hidden" style="margin-left:auto; padding:4px 8px;"><i class="ph ph-heart"></i></button>
             </h2>
-            <div id="hh-indicator" class="indicator hidden">🔥 Happy Hour en cours !</div>
+            <div id="hh-indicator" class="indicator hidden"><i class="ph-fill ph-fire"></i> Happy Hour en cours !</div>
             <img id="modal-image" src="" alt="Photo du bar" style="display:none; width:100%; border-radius: 8px; margin-bottom: 15px;">
             <p><strong>Adresse:</strong> <span id="modal-address"></span></p>
             <p><strong>Téléphone:</strong> <span id="modal-phone"></span></p>
@@ -86,14 +87,14 @@
             <ul id="modal-menu" style="margin-bottom: 15px;"></ul>
             
             <div class="modal-actions">
-                <button id="btn-edit-bar" class="glass-btn">✏️ Modifier</button>
+                <button id="btn-edit-bar" class="glass-btn"><i class="ph ph-pencil"></i> Modifier</button>
                 <!-- <button id="btn-delete-bar" class="glass-btn danger">🗑️ Supprimer</button> -->
             </div>
         </div>
     </div>
 
     <!-- Bouton d'ajout -->
-    <button id="fab-add" class="glass-btn fab">+</button>
+    <button id="fab-add" class="glass-btn fab"><i class="ph ph-plus" style="font-weight: bold;"></i></button>
     
     <!-- Modale d'ajout/Modif -->
     <div id="add-modal" class="modal hidden">
