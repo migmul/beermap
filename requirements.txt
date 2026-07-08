@@ -4,7 +4,7 @@ sqlalchemy
 pydantic
 python-multipart
 Pillow
-passlib[bcrypt]
+bcrypt
 PyJWT
 dotenv
 requests

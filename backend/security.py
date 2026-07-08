@@ -1,25 +1,35 @@
 import os
-from dotenv import load_dotenv
-from passlib.context import CryptContext
+import bcrypt
 from datetime import datetime, timedelta
 import jwt
 from fastapi.security import OAuth2PasswordBearer
 from fastapi import Depends, HTTPException
 from sqlalchemy.orm import Session
+from dotenv import load_dotenv
 from . import database, models
 
 load_dotenv()
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 SECRET_KEY = os.getenv("BEERMAP_SECRET_KEY", "@ukRxcbtYauaxiGdK8elNYtUnRZtLBVj4CHOBwCI0f^MCnAtsx$E&%d^cydxo@c4wPotb%w^vqHp&*Vx8luTiRPX1cKKbugZWe$&VE2Ok!PEtfugV!i25SGogJfKMX3%")
 ALGORITHM = "HS256"
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
-def get_password_hash(password):
-    return pwd_context.hash(password)
+def get_password_hash(password: str) -> str:
+    """Hash a password using pure bcrypt"""
+    # bcrypt requiert des bytes, et renvoie des bytes. On decode() pour stocker un string en BDD
+    pwd_bytes = password.encode("utf-8")
+    salt = bcrypt.gensalt()
+    return bcrypt.hashpw(pwd_bytes, salt).decode("utf-8")
 
-def verify_password(plain_password, hashed_password):
-    return pwd_context.verify(plain_password, hashed_password)
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+    """Verify a password against its hash using pure bcrypt"""
+    try:
+        return bcrypt.checkpw(
+            plain_password.encode("utf-8"),
+            hashed_password.encode("utf-8")
+        )
+    except ValueError:
+        return False
 
 def create_access_token(data: dict):
     to_encode = data.copy()
