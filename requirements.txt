@@ -3,6 +3,8 @@ uvicorn
 sqlalchemy
 pydantic
 python-multipart
-Pillow==10.3.0
-passlib[bcrypt]==1.7.4
-PyJWT==2.8.0
+Pillow
+passlib[bcrypt]
+PyJWT
+dotenv
+requests
