@@ -3,6 +3,7 @@
 ## [1.7.6] - 2026-07-09
 ### Corrections
 - **Modale Info bar** : Ajout de la date de dernière modification des informations du bar.
+- **seed.py** : Ajout du filtre Bas-Rhin dans le script de seed.
 
 ## [1.7.5.1] - 2026-07-09
 ### Corrections
