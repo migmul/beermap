@@ -1,3 +1,7 @@
+/* =========================================
+   Base Glass UI
+   ========================================= */
+
 .glass-panel {
     background: var(--glass-bg);
     backdrop-filter: blur(12px);
@@ -6,30 +10,6 @@
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15);
     border-radius: 16px;
 }
-
-/* Header global */
-.top-header {
-    position: fixed;
-    top: 15px;
-    left: 15px;
-    width: calc(100% - 30px);
-    z-index: 1000;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 30px;
-    border-radius: 32px;
-}
-
-.logo { font-size: 1.5rem; font-weight: bold; color: var(--accent); }
-
-.main-nav { display: flex; gap: 20px; align-items: center; }
-.main-nav a {
-    color: var(--text-color);
-    text-decoration: none;
-    font-weight: 500;
-}
-.main-nav a.active { color: var(--accent); border-bottom: 2px solid var(--accent); }
 
 .glass-btn {
     background: var(--glass-bg);
@@ -42,8 +22,27 @@
     transition: 0.3s;
 }
 
-.glass-btn.primary { background: var(--accent); color: #fff; font-weight: bold; }
-.glass-btn:hover { background: var(--accent-hover); color: #fff; }
+.glass-btn:hover {
+    background: var(--accent-hover);
+    color: #fff;
+}
+
+.glass-btn.primary {
+    background: var(--accent);
+    color: #fff;
+    font-weight: bold;
+}
+
+.glass-btn.danger {
+    background: rgba(220, 53, 69, 0.2);
+    border-color: #dc3545;
+    color: #ff6b6b;
+}
+
+.glass-btn.danger:hover {
+    background: #dc3545;
+    color: white;
+}
 
 .glass-input {
     width: 100%;
@@ -53,6 +52,47 @@
     border: 1px solid var(--glass-border);
     background: rgba(0, 0, 0, 0.05);
     color: var(--text-color);
+}
+
+.glass-slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 4px;
+    /* Un fond semi-transparent noir (Light mode) ou blanc (Dark mode) selon le texte */
+    background: rgba(128, 128, 128, 0.4); 
+    border-radius: 4px;
+    outline: none;
+    margin-top: 5px;
+    /* Optionnel : petite ombre interne pour le relief */
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.2); 
+}
+
+.glass-slider::-webkit-slider-thumb {
+    -webkit-appearance: none; 
+    appearance: none;
+    width: 18px; 
+    height: 18px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5); /* Ombre pour le faire ressortir */
+}
+
+.tag-badge {
+    background: var(--glass-border);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    margin-right: 5px;
+}
+
+.indicator {
+    background: rgba(218, 165, 32, 0.2);
+    color: var(--accent);
+    padding: 5px 10px;
+    border-radius: 8px;
+    display: inline-block;
+    margin-bottom: 10px;
 }
 
 .fab {
@@ -68,7 +108,83 @@
     color: white;
 }
 
-/* Modales */
+/* =========================================
+   Header
+   ========================================= */
+
+.top-header {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    width: calc(100% - 30px);
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    border-radius: 32px;
+}
+
+.logo {
+    font-size: 1.5rem; 
+    font-weight: bold;
+    color: var(--accent);
+}
+
+.main-nav {
+    display: flex; 
+    gap: 20px; 
+    align-items: center; 
+}
+
+.main-nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.main-nav a.active {
+    color: var(--accent);
+    border-bottom: 2px solid var(--accent);
+}
+
+/* =========================================
+   Sidebar & Filtres
+   ========================================= */
+
+.sidebar {
+    position: fixed;
+    top: 90px; /* Sous le header */
+    left: 20px;
+    width: 320px;
+    z-index: 1000;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.filters-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Cache le bouton filtre sur PC */
+#mobile-filter-btn {
+    display: none;
+}
+
+/* Style jaune pour les checkbox */
+input[type="checkbox"] {
+    accent-color: var(--accent);
+}
+
+
+/* =========================================
+   Modales : Général
+   ========================================= */
+
 .modal {
     position: absolute;
     top: 0; left: 0; width: 100vw; height: 100vh;
@@ -90,49 +206,19 @@
     margin-bottom: 10px;
 }
 
-.close-btn, .close-btn-add {
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-top:
+    20px;
+}
+
+.close-btn, .close-btn-add, .close-btn-login, .close-btn-admin {
     position: absolute; top: 15px; right: 20px;
     font-size: 24px; cursor: pointer; color: var(--accent);
 }
 
-.indicator {
-    background: rgba(218, 165, 32, 0.2);
-    color: var(--accent);
-    padding: 5px 10px;
-    border-radius: 8px;
-    display: inline-block;
-    margin-bottom: 10px;
-}
-
-.tag-badge {
-    background: var(--glass-border);
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 0.8em;
-    margin-right: 5px;
-}
-
-/* Sidebar verticale gauche */
-.sidebar {
-    position: fixed;
-    top: 90px; /* Sous le header */
-    left: 20px;
-    width: 320px;
-    z-index: 1000;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.filters-vertical { display: flex; flex-direction: column; gap: 10px; }
-
-/* Boutons et Inputs... inchangés */
-.glass-btn.danger { background: rgba(220, 53, 69, 0.2); border-color: #dc3545; color: #ff6b6b; }
-.glass-btn.danger:hover { background: #dc3545; color: white; }
-.modal-actions { display: flex; gap: 10px; margin-top: 20px; }
-
-/* ANIMATION D'OUVERTURE MODALE */
+/* Animation d'ouverture */
 @keyframes popIn {
     0% { opacity: 0; transform: scale(0.85) translateY(20px); }
     100% { opacity: 1; transform: scale(1) translateY(0); }
@@ -142,33 +228,70 @@
     animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
-.glass-slider {
-    -webkit-appearance: none;
-    width: 100%;
-    height: 4px;
-    /* Un fond semi-transparent noir (Light mode) ou blanc (Dark mode) selon le texte */
-    background: rgba(128, 128, 128, 0.4); 
-    border-radius: 4px;
-    outline: none;
-    margin-top: 5px;
-    /* Optionnel : petite ombre interne pour le relief */
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.2); 
-}
-.glass-slider::-webkit-slider-thumb {
-    -webkit-appearance: none; 
-    appearance: none;
-    width: 18px; 
-    height: 18px;
-    border-radius: 50%;
-    background: var(--accent);
-    cursor: pointer;
-    box-shadow: 0 0 5px rgba(0,0,0,0.5); /* Ombre pour le faire ressortir */
+/* =========================================
+   Modales : Informations
+   ========================================= */
+
+/* =========================================
+   Modales : Ajout / Édition
+   ========================================= */
+
+.schedule-grid {
+    display: grid;
+    grid-template-columns: 40px 1fr 1fr;
+    gap: 5px;
+    margin-bottom: 15px;
+    align-items: center;
+    background: rgba(0,0,0,0.05);
+    padding: 10px;
+    border-radius: 8px;
 }
 
-/* Style jaune pour les checkbox */
-input[type="checkbox"] { accent-color: var(--accent); }
+.schedule-grid-title {
+    font-size: 0.9em;
+    margin-bottom: 5px;
+    display: block;
+}
 
-/* --- VUE LISTE (Cards) --- */
+.schedule-grid-day {
+    font-size: 0.8em;
+    text-align: right;
+    padding-right: 5px;
+}
+
+.schedule-grid-hour {
+    margin: 0;
+    padding: 5px;
+}
+
+/* =========================================
+   Modales : Admin
+   ========================================= */
+
+#admin-list {
+    margin-top: 10px;
+    list-style: none;
+    padding: 0;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* =========================================
+   Vue liste
+   ========================================= */
+
+#list-container {
+    padding-top: 90px;
+    padding-left: 360px;
+    padding-right: 20px;
+    height: 100vh;
+    overflow-y: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-content: flex-start;
+}
+
 .bar-card {
     width: calc(33.333% - 20px);
     min-width: 250px;
@@ -186,19 +309,39 @@ input[type="checkbox"] { accent-color: var(--accent); }
     border-color: var(--accent);
 }
 
-.bar-card h3 { margin: 0; color: var(--text-color); display: flex; justify-content: space-between; align-items: center; }
-.bar-card p { margin: 0; font-size: 0.9em; color: var(--text-color); opacity: 0.8; }
-.bar-card img { width: 100%; height: 150px; object-fit: cover; border-radius: 8px; }
-.bar-card .tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: auto; }
-
-/* Ajustement pour les petits écrans */
-@media (max-width: 1200px) { .bar-card { width: calc(50% - 20px); } }
-@media (max-width: 800px) { 
-    .bar-card { width: 100%; }
-    #list-container { padding-left: 20px !important; }
+.bar-card h3 {
+    margin: 0; 
+    color: var(--text-color); 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
 }
 
-/* --- RESPONSIVE DESIGN (MOBILE) --- */
+.bar-card p {
+    margin: 0; 
+    font-size: 0.9em; 
+    color: var(--text-color); 
+    opacity: 0.8; 
+}
+
+.bar-card img {
+    width: 100%; 
+    height: 150px; 
+    object-fit: cover; 
+    border-radius: 8px;
+}
+
+.bar-card .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: auto;
+}
+
+/* =========================================
+   Responsive
+   ========================================= */
+
 @media (max-width: 800px) {
     /* Header plus compact */
     .top-header { 
@@ -232,11 +375,31 @@ input[type="checkbox"] { accent-color: var(--accent); }
     .sidebar.open { transform: translateY(0); }
     
     /* Bouton filtre mobile visible */
-    #mobile-filter-btn { display: block !important; }
+    #mobile-filter-btn {
+        display: block !important;
+        bottom: 30px;
+        left: 20px;
+        right: auto;
+        z-index: 1001;
+        background: var(--glass-bg);
+        color: var(--text-color);
+        font-size: 20px;
+    }
     
     /* Ajustement des modales */
     .modal-content { padding: 20px; width: 95%; max-height: 90vh; overflow-y: auto; }
+
+    .bar-card { width: 100%; }
+    #list-container { padding-left: 20px !important; }
 }
 
-/* Cache le bouton filtre sur PC */
-#mobile-filter-btn { display: none; }
+@media (max-width: 1200px) { 
+    bar-card {
+        width: calc(50% - 20px);
+    }
+}
+
+
+
+
+

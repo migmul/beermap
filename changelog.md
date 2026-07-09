@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.7.5] - 2026-07-09
+### Corrections
+- **CSS** : Audit et nettoyage des styles frontend pour repérer les propriétés orphelines ou dupliquées.
+- **Organisation CSS** : Réorganisation de `glassmorphism.css` en sections thématiques (`Header & Navigation`, `Sidebar & Filters`, `Modales : Général`, `Vue Liste`, `Responsive`, etc.).
+- **UI** : Préparation à la centralisation des styles inline du HTML vers des classes CSS dédiées pour améliorer la maintenabilité.
+
 ## [1.7.4] - 2026-07-08
 ### Corrections
 - **Modale Compte** : Ajout d'un espacement (`margin-bottom`) sous le titre "Mon compte" pour aérer l'interface avec le champ de texte "Pseudo" ou le message de bienvenue.

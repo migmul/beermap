@@ -22,9 +22,9 @@
 <body>
     <!-- En-tête pleine largeur -->
     <header class="glass-panel top-header">
-        <div class="logo" style="display: flex; align-items: baseline; gap: 8px;">
+        <div class="logo">
             Bière joyeuse
-            <span style="font-size: 0.5em; color: #a0a0a0; font-weight: normal;">v1.6</span>
+            <span style="font-size: 0.5em; color: #a0a0a0; font-weight: normal;">v1.7.5</span>
         </div>
         <nav class="main-nav">
             <a href="#" id="nav-map" class="active">Vue carte</a>
@@ -36,7 +36,7 @@
     </header>
 
     <!-- Barre latérale gauche -->
-    <button id="mobile-filter-btn" class="glass-btn fab" style="bottom: 30px; left: 20px; right: auto; z-index: 1001; background: var(--glass-bg); color: var(--text-color); font-size: 20px;"><i class="ph ph-magnifying-glass"></i></button>
+    <button id="mobile-filter-btn" class="glass-btn fab"><i class="ph ph-magnifying-glass"></i></button>
     <aside class="glass-panel sidebar">
         <h3>Recherche & Filtres</h3>
         <input type="text" id="search-input" class="glass-input" placeholder="Nom ou adresse du bar...">
@@ -63,13 +63,13 @@
     </aside>
 
     <main id="map-container"></main>
-    <main id="list-container" class="hidden" style="padding-top: 90px; padding-left: 360px; padding-right: 20px; height: 100vh; overflow-y: auto; display: flex; flex-wrap: wrap; gap: 20px; align-content: flex-start;"></main>
+    <main id="list-container" class="hidden"></main>
 
     <!-- Modale Détails du Bar -->
     <div id="bar-modal" class="modal hidden">
         <div class="modal-content glass-panel">
             <span class="close-btn">&times;</span>
-            <h2 id="modal-title" style="display:flex; align-items:center; gap:10px;">
+            <h2 id="modal-title">
                 <span id="modal-name">Nom du Bar</span>
                 <span id="modal-status-dot" style="font-size: 0.8em;"><i class="ph-fill ph-circle" style="color: gray;"></i></span>
                 <button id="btn-fav" class="glass-btn hidden" style="margin-left:auto; padding:4px 8px;"><i class="ph ph-heart"></i></button>
@@ -110,35 +110,35 @@
                 <input type="url" id="add-menu-link" placeholder="Lien vers le menu (URL)" class="glass-input">
 
                 <!-- NOUVELLE GRILLE 7 JOURS -->
-                <label style="font-size: 0.9em; margin-bottom: 5px; display: block;">Horaires d'ouverture (laisser vide si fermé) :</label>
-                <div class="schedule-grid" style="display: grid; grid-template-columns: 40px 1fr 1fr; gap: 5px; margin-bottom: 15px; align-items: center; background: rgba(0,0,0,0.05); padding: 10px; border-radius: 8px;">
-                    <span style="font-size: 0.8em; text-align: right; padding-right: 5px;">Lun</span>
-                    <input type="time" id="add-h-Mo-start" class="glass-input" style="margin: 0; padding: 5px;">
-                    <input type="time" id="add-h-Mo-end" class="glass-input" style="margin: 0; padding: 5px;">
+                <label class="schedule-grid-title">Horaires d'ouverture (laisser vide si fermé) :</label>
+                <div class="schedule-grid">
+                    <span class="schedule-grid-day">Lun</span>
+                    <input type="time" id="add-h-Mo-start" class="glass-input schedule-grid-hour">
+                    <input type="time" id="add-h-Mo-end" class="glass-input schedule-grid-hour">
 
-                    <span style="font-size: 0.8em; text-align: right; padding-right: 5px;">Mar</span>
-                    <input type="time" id="add-h-Tu-start" class="glass-input" style="margin: 0; padding: 5px;">
-                    <input type="time" id="add-h-Tu-end" class="glass-input" style="margin: 0; padding: 5px;">
+                    <span class="schedule-grid-day">Mar</span>
+                    <input type="time" id="add-h-Tu-start" class="glass-input schedule-grid-hour">
+                    <input type="time" id="add-h-Tu-end" class="glass-input schedule-grid-hour">
 
-                    <span style="font-size: 0.8em; text-align: right; padding-right: 5px;">Mer</span>
-                    <input type="time" id="add-h-We-start" class="glass-input" style="margin: 0; padding: 5px;">
-                    <input type="time" id="add-h-We-end" class="glass-input" style="margin: 0; padding: 5px;">
+                    <span class="schedule-grid-day">Mer</span>
+                    <input type="time" id="add-h-We-start" class="glass-input schedule-grid-hour">
+                    <input type="time" id="add-h-We-end" class="glass-input schedule-grid-hour">
 
-                    <span style="font-size: 0.8em; text-align: right; padding-right: 5px;">Jeu</span>
-                    <input type="time" id="add-h-Th-start" class="glass-input" style="margin: 0; padding: 5px;">
-                    <input type="time" id="add-h-Th-end" class="glass-input" style="margin: 0; padding: 5px;">
+                    <span class="schedule-grid-day">Jeu</span>
+                    <input type="time" id="add-h-Th-start" class="glass-input schedule-grid-hour">
+                    <input type="time" id="add-h-Th-end" class="glass-input schedule-grid-hour">
 
-                    <span style="font-size: 0.8em; text-align: right; padding-right: 5px;">Ven</span>
-                    <input type="time" id="add-h-Fr-start" class="glass-input" style="margin: 0; padding: 5px;">
-                    <input type="time" id="add-h-Fr-end" class="glass-input" style="margin: 0; padding: 5px;">
+                    <span class="schedule-grid-day">Ven</span>
+                    <input type="time" id="add-h-Fr-start" class="glass-input schedule-grid-hour">
+                    <input type="time" id="add-h-Fr-end" class="glass-input schedule-grid-hour">
 
-                    <span style="font-size: 0.8em; text-align: right; padding-right: 5px;">Sam</span>
-                    <input type="time" id="add-h-Sa-start" class="glass-input" style="margin: 0; padding: 5px;">
-                    <input type="time" id="add-h-Sa-end" class="glass-input" style="margin: 0; padding: 5px;">
+                    <span class="schedule-grid-day">Sam</span>
+                    <input type="time" id="add-h-Sa-start" class="glass-input schedule-grid-hour">
+                    <input type="time" id="add-h-Sa-end" class="glass-input schedule-grid-hour">
 
-                    <span style="font-size: 0.8em; text-align: right; padding-right: 5px;">Dim</span>
-                    <input type="time" id="add-h-Su-start" class="glass-input" style="margin: 0; padding: 5px;">
-                    <input type="time" id="add-h-Su-end" class="glass-input" style="margin: 0; padding: 5px;">
+                    <span class="schedule-grid-day">Dim</span>
+                    <input type="time" id="add-h-Su-start" class="glass-input schedule-grid-hour">
+                    <input type="time" id="add-h-Su-end" class="glass-input schedule-grid-hour">
                 </div>
                 
                 <div style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
@@ -166,7 +166,7 @@
     <!-- Modale Connexion/Inscription -->
     <div id="login-modal" class="modal hidden">
         <div class="modal-content glass-panel animated-modal">
-            <span class="close-btn-login" style="position:absolute; right:15px; top:10px; cursor:pointer; color:var(--accent); font-size:24px;">&times;</span>
+            <span class="close-btn-login">&times;</span>
             
             <!-- Le bloc que vous m'avez demandé de placer est ici : -->
             <h2 id="auth-title" style="margin-bottom: 25px;">Mon Compte</h2>
@@ -191,9 +191,9 @@
     <!-- Modale d'Admin (Panneau de validation) -->
     <div id="admin-modal" class="modal hidden">
         <div class="modal-content glass-panel animated-modal" style="max-width: 600px;">
-            <span class="close-btn-admin" style="position:absolute; right:15px; top:10px; cursor:pointer; color:var(--accent); font-size:24px;">&times;</span>
+            <span class="close-btn-admin">&times;</span>
             <h2>Validation des bars</h2>
-            <ul id="admin-list" style="list-style: none; padding: 0; max-height: 300px; overflow-y: auto;"></ul>
+            <ul id="admin-list"></ul>
         </div>
     </div>
 
