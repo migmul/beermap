@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.7.5.1] - 2026-07-09
+### Corrections
+- **Sidebar** : Réduction de l’espace entre la barre de recherche et les filtres pour un panneau latéral plus compact.
+- **CSS** : Remplacement de l’usage de `-webkit-appearance` par la propriété standard `appearance` sur les sliders, avec fallback WebKit uniquement si nécessaire après test.
+
 ## [1.7.5] - 2026-07-09
 ### Corrections
 - **CSS** : Audit et nettoyage des styles frontend pour repérer les propriétés orphelines ou dupliquées.

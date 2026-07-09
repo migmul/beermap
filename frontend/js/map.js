@@ -65,7 +65,7 @@ const MapService = {
                 map.setView([latitude, longitude], 14);
                 L.circleMarker([latitude, longitude], {
                     color: '#4285F4', radius: 8, fillOpacity: 0.8
-                }).addTo(map).bindPopup("Vous êtes ici");
+                }).addTo(map).bindPopup("Ma position");
             });
         }
     },
