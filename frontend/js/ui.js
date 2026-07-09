@@ -98,6 +98,17 @@ const UI = {
             menuCont.classList.remove('hidden');
         } else menuCont.classList.add('hidden');
         
+        const lastUpdatedEl = document.getElementById('modal-last-updated');
+        if (bar.updated_at) {
+            const date = new Date(bar.updated_at);
+            lastUpdatedEl.textContent = `Mise à jour le ${date.toLocaleDateString('fr-FR', {
+                day: '2-digit', month: 'long', year: 'numeric'
+            })}`;
+            lastUpdatedEl.classList.remove('hidden');
+        } else {
+            lastUpdatedEl.classList.add('hidden');
+        }
+
         let hoursHTML = Utils.formatHoursToDisplay(bar.standard_hours);
         if (bar.hh_hours) {
             hoursHTML += `<br><br><strong style="color:var(--accent)">Happy Hour :</strong><br>${Utils.formatHoursToDisplay(bar.hh_hours)}`;

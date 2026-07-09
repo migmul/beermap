@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from datetime import datetime
 from typing import List, Optional
 
 class MenuBase(BaseModel):
@@ -31,6 +32,7 @@ class BarResponse(BarBase):
     image_url: Optional[str] = None
     menus: List[MenuResponse] = []
     is_favorite: Optional[bool] = False
+    updated_at: Optional[datetime] = None
     
     class Config:
         from_attributes = True

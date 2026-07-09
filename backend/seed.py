@@ -1,5 +1,5 @@
 """
-seed.py – Peuple la base de données avec tous les bars de Strasbourg
+seed.py – Peuple la base de données avec les bars
 récupérés via l'API Overpass (OpenStreetMap).
 
 Usage :
@@ -17,16 +17,29 @@ Base.metadata.create_all(bind=engine)
 # ── Requête Overpass ─────────────────────────────────────────────────────────
 OVERPASS_URL = "https://overpass-api.de/api/interpreter"
 
+### Filtre Bas-Rhin
 OVERPASS_QUERY = """
-[out:json][timeout:60];
-area["name"="Strasbourg"]["boundary"="administrative"]["admin_level"="8"]->.strasbourg;
+[out:json][timeout:120];
+area["ref:INSEE"="67"]["boundary"="administrative"]["admin_level"="6"]->.bas_rhin;
 (
-  node["amenity"="bar"](area.strasbourg);
-  node["amenity"="pub"](area.strasbourg);
-  node["amenity"="biergarten"](area.strasbourg);
+  node["amenity"="bar"](area.bas_rhin);
+  node["amenity"="pub"](area.bas_rhin);
+  node["amenity"="biergarten"](area.bas_rhin);
 );
 out body;
 """
+
+### Filtre Strasbourg
+# OVERPASS_QUERY = """
+# [out:json][timeout:60];
+# area["name"="Strasbourg"]["boundary"="administrative"]["admin_level"="8"]->.strasbourg;
+# (
+#   node["amenity"="bar"](area.strasbourg);
+#   node["amenity"="pub"](area.strasbourg);
+#   node["amenity"="biergarten"](area.strasbourg);
+# );
+# out body;
+# """
 
 
 def fetch_bars_from_osm() -> list[dict]:

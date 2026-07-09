@@ -244,6 +244,13 @@ input[type="checkbox"] {
    Modales : Informations
    ========================================= */
 
+.bar-last-updated {
+    font-size: 0.75rem;
+    color: #888;
+    margin-top: 0.5rem;
+    font-style: italic;
+}
+
 /* =========================================
    Modales : Ajout / Édition
    ========================================= */

@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, Query, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
+from datetime import datetime, timezone
 from .. import crud, schemas, models, database, security
 
 router = APIRouter(prefix="/bars", tags=["bars"])
@@ -30,7 +31,8 @@ def update_status(bar_id: int, status: str, db: Session = Depends(database.get_d
                 original.name, original.address, original.phone = draft.name, draft.address, draft.phone
                 original.standard_hours, original.hh_hours = draft.standard_hours, draft.hh_hours
                 original.tags, original.latitude, original.longitude = draft.tags, draft.latitude, draft.longitude
-                original.website, original.menu_link = draft.website, draft.menu_link
+                original.website, original.menu_link = draft.website, draft.menu_link,
+                original.updated_at = datetime.now(timezone.utc)
                 if draft.image_url:
                     original.image_url = draft.image_url
             # On supprime le brouillon qui ne sert plus à rien

@@ -43,13 +43,11 @@ async def suggest_bar(
 
     # --- MODE MODIFICATION ---
     if bar_id:
-        # On ne modifie plus l'existant. On crée un brouillon.
         bar_data = schemas.BarCreate(
             name=name, latitude=latitude, longitude=longitude, address=address,
             standard_hours=standard_hours, hh_hours=hh_hours, tags=tags, phone=phone,
             website=website, menu_link=menu_link
         )
-        # ...
         db_draft = crud.create_bar(db, bar_data)
         db_draft.original_bar_id = bar_id
         if image_url: 

@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, String, Float, Boolean, ForeignKey, Table
+from sqlalchemy import Column, Integer, String, Float, Boolean, ForeignKey, Table, DateTime
+from datetime import datetime, timezone
 from sqlalchemy.orm import relationship
 from .database import Base
 
@@ -32,6 +33,7 @@ class Bar(Base):
     website = Column(String, nullable=True)
     menu_link = Column(String, nullable=True)
     status = Column(String, default="pending") 
+    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
     original_bar_id = Column(Integer, ForeignKey("bars.id"), nullable=True)
 
     menus = relationship("Menu", back_populates="bar")

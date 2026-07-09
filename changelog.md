@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.7.6] - 2026-07-09
+### Corrections
+- **Modale Info bar** : Ajout de la date de dernière modification des informations du bar.
+
 ## [1.7.5.1] - 2026-07-09
 ### Corrections
 - **Sidebar** : Réduction de l’espace entre la barre de recherche et les filtres pour un panneau latéral plus compact.

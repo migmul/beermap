@@ -14,17 +14,20 @@ def upgrade_db():
     inspector = inspect(engine)
     with engine.connect() as conn:
         if "bars" in inspector.get_table_names():
-            columns = [col['name'] for col in inspector.get_columns("bars")]
-            
-            # Liste des colonnes ajoutées récemment à vérifier
+            columns = [col["name"] for col in inspector.get_columns("bars")]
+
             if "original_bar_id" not in columns:
                 conn.execute(text("ALTER TABLE bars ADD COLUMN original_bar_id INTEGER"))
             if "website" not in columns:
                 conn.execute(text("ALTER TABLE bars ADD COLUMN website VARCHAR"))
             if "menu_link" not in columns:
                 conn.execute(text("ALTER TABLE bars ADD COLUMN menu_link VARCHAR"))
+            if "updated_at" not in columns:
+                conn.execute(text("ALTER TABLE bars ADD COLUMN updated_at DATETIME"))
+                conn.execute(text("UPDATE bars SET updated_at = CURRENT_TIMESTAMP WHERE updated_at IS NULL"))
             if "user_favorites" not in inspector.get_table_names():
                 models.user_favorites.create(engine)
+
             conn.commit()
 
 upgrade_db()
